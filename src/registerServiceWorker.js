@@ -1,8 +1,9 @@
+// TODO use for PWA offline regime
 /* eslint-disable no-console */
-
 import { register } from 'register-service-worker';
+import utils from '@/utils';
 
-if (process.env.NODE_ENV === 'production') {
+if (utils.isProd()) {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready() {
       console.log(
