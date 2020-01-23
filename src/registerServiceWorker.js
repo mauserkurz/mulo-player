@@ -1,4 +1,3 @@
-// TODO use for PWA offline regime
 /* eslint-disable no-console */
 import { register } from 'register-service-worker';
 import utils from '@/utils';

@@ -4,10 +4,19 @@ import router from './router';
 import store from './store';
 import './registerServiceWorker';
 import vuetify from './plugins/vuetify';
-import 'roboto-fontface/css/roboto/roboto-fontface.css';
-import '@mdi/font/css/materialdesignicons.css';
 
 Vue.config.productionTip = false;
+
+router.beforeEach((to, from, next) => {
+  if (to.fullPath === '/player' && !store.getters['user/isAuthorized']) {
+    next('/');
+  } else if (to.fullPath === '/' && store.getters['user/isAuthorized']) {
+    next('/player');
+  } else if (to.name === null) {
+    next('/');
+  }
+  next();
+});
 
 new Vue({
   router,

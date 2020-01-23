@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component Auth snapshots should match snapshot 1`] = `
+<main class="v-content auth" style="padding: 0px 0px 0px 0px;">
+  <div class="v-content__wrap">
+    <div class="container fill-height container--fluid">
+      <div class="row align-center justify-center">
+        <div class="col-sm-8 col-md-4 col-12">
+          <div class="auth-form elevation-12 v-card v-sheet theme--light">
+            <form novalidate="novalidate" class="v-form">
+              <header class="v-sheet v-sheet--tile theme--dark v-toolbar v-toolbar--flat primary" style="height: 64px;">
+                <div class="v-toolbar__content" style="height: 64px;">
+                  <div class="v-toolbar__title">Login form</div>
+                  <div class="spacer"></div> <button type="button" class="auth-form__sign-in-tab v-btn v-btn--flat v-btn--text theme--dark v-size--small"><span class="v-btn__content">
+        Sign In
+      </span></button> <button type="button" class="auth-form__sign-up-tab v-btn v-btn--flat v-btn--text theme--dark v-size--small"><span class="v-btn__content">
+        Sign Up
+      </span></button>
+                </div>
+              </header>
+              <div class="v-card__text">
+                <div class="v-input theme--light v-text-field">
+                  <div class="v-input__prepend-outer">
+                    <div class="v-input__icon v-input__icon--prepend"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">person</i></div>
+                  </div>
+                  <div class="v-input__control">
+                    <div class="v-input__slot">
+                      <div class="v-text-field__slot"><label for="input-12" class="v-label theme--light" style="left: 0px; position: absolute;">Login</label><input name="login" id="input-12" type="email"></div>
+                    </div>
+                    <div class="v-text-field__details">
+                      <div class="v-messages theme--light"><span name="message-transition" tag="div" class="v-messages__wrapper"></span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="v-input theme--light v-text-field">
+                  <div class="v-input__prepend-outer">
+                    <div class="v-input__icon v-input__icon--prepend"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">lock</i></div>
+                  </div>
+                  <div class="v-input__control">
+                    <div class="v-input__slot">
+                      <div class="v-text-field__slot"><label for="input-16" class="v-label theme--light" style="left: 0px; position: absolute;">Password</label><input name="password" id="input-16" type="password"></div>
+                    </div>
+                    <div class="v-text-field__details">
+                      <div class="v-messages theme--light"><span name="message-transition" tag="div" class="v-messages__wrapper"></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="v-card__text" style="display: none;">
+                <div role="alert" class="v-alert v-sheet theme--dark v-alert--dense error">
+                  <div class="v-alert__wrapper"><i aria-hidden="true" class="v-icon notranslate v-alert__icon mdi mdi-alert theme--dark"></i>
+                    <div class="v-alert__content">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="v-card__actions">
+                <div class="spacer"></div> <button type="submit" class="auth-form__submit-button v-btn v-btn--contained theme--light v-size--default primary"><span class="v-btn__content">
+        Login
+      </span></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+`;

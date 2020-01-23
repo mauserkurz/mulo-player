@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component PlayerWrap snapshots should match snapshot 1`] = `
+<div class="player-wrap"><img alt="App logo" src="../../assets/logo.svg">
+  <div class="player">player</div>
+</div>
+`;

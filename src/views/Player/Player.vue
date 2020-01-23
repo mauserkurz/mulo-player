@@ -1,16 +1,13 @@
 <template>
-  <div class="auth">
-    <h1>auth</h1>
-  </div>
+  <div class="player">player</div>
 </template>
 
 <script>
-// TODO add unit
 export default {
-  name: 'Auth',
+  name: 'Player',
 };
 </script>
 
 <style scoped lang="less">
-.auth {}
+.player {}
 </style>

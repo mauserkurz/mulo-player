@@ -5,15 +5,14 @@
 </template>
 
 <script>
-// TODO change favicon.ico
-// TODO change logo.svg
-// TODO add axios
-// TODO unit
 export default {
   name: 'App',
 };
 </script>
 
 <style lang="less">
-@import ~'vuetify/dist/vuetify.min.css';
+@import '~vuetify/dist/vuetify.min.css';
+@import '~roboto-fontface/css/roboto/roboto-fontface.css';
+@import '~material-design-icons-iconfont/dist/material-design-icons.css';
+@import '~@mdi/font/css/materialdesignicons.css';
 </style>

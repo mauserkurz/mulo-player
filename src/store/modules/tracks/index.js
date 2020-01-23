@@ -1,4 +1,3 @@
-// TODO unit test
 export default {
   namespaced: true,
 

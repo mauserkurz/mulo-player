@@ -1,5 +1,5 @@
-import Auth from '../views/Auth.vue';
-import PlayerWrap from '../views/PlayerWrap.vue';
+import Auth from '../components/Auth/Auth.vue';
+import PlayerWrap from '../components/PlayerWrap/PlayerWrap.vue';
 
 export default [
   {

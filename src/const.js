@@ -1,14 +1,28 @@
 export const THEME = {
   themes: {
     light: {
-      primary: '#ee44aa',
-      secondary: '#424242',
-      accent: '#82B1FF',
-      error: '#FF5252',
+      primary: '#009688',
+      secondary: '#00bcd4',
+      accent: '#fff',
+      error: '#F44336',
       info: '#2196F3',
       success: '#4CAF50',
       warning: '#FFC107',
     },
   },
 };
-export const API_URL = '';
+export const API_URL = '/api/';
+export const AUTH_FORM_TYPE_MAP = {
+  SIGN_IN: 'sign-in',
+  SIGN_UP: 'sign-up',
+};
+export const STATUS_MAP = {
+  UNAUTHORIZED: 401,
+};
+export const API_ERROR_MAP = {
+  AUTH: {
+    INCORRECT_PASSWORD_OR_LOGIN: 'Incorrect login or password, try to use another data',
+  },
+};
+export const EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const PASSWORD_REGEXP = /^[\w\d]*$/;
