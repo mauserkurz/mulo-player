@@ -1,7 +1,7 @@
 <template>
   <div class="player-wrap">
-    <img alt="App logo" src="../../assets/logo.svg" width="256" height="256">
-    <Player file="URL"/>
+    <img alt="App logo" src="@/assets/logo.svg" width="256" height="256">
+    <Player :file="URL"/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   components: { Player },
 
   data() {
-    return { URL: '' };
+    return { URL: 'https://dl4.ru-music.xn--41a.ws/mp3/1584.mp3' };
   },
 };
 </script>

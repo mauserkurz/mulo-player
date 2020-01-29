@@ -17,7 +17,7 @@ module.exports = {
   overrides: [
     {
       files: [
-        "**/*.spec.js",
+        '**/*.spec.js',
       ],
       env: {
         jest: true,

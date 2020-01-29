@@ -1,7 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Component PlayerWrap snapshots should match snapshot 1`] = `
-<div class="player-wrap"><img alt="App logo" src="../../assets/logo.svg">
-  <div class="player">player</div>
+<div class="player-wrap"><img alt="App logo" src="@/assets/logo.svg" width="256" height="256">
+  <div class="player"><button title="Stop" type="button" class="control"><img src="" alt="stop icon" width="20" height="20">
+      <!----> </button> <button title="Play/Pause" type="button" class="control"><img src="" alt="pause icon" width="20" height="20"> <img src="" alt="play icon" width="20" height="20" style="display: none;"> </button>
+    <div class="time-line">
+      <div title="Time played : Total time" class="time-line__progress">
+        <div class="time-line__line"></div>
+      </div>
+      <div class="time-line__timers">
+        <div class="time-line__current">00:00</div>
+        <div class="time-line__total">00:00</div>
+      </div>
+    </div> <button title="Download" type="button" class="control"><img src="" alt="download icon" width="20" height="20">
+      <!----> </button> <button title="Loop/Once" type="button" class="control"><img src="" alt="once icon" width="20" height="20"> <img src="" alt="loop icon" width="20" height="20" style="display: none;"> </button> <button title="Mute" type="button" class="control"><img src="" alt="sound icon" width="20" height="20"> <img src="" alt="mute icon" width="20" height="20" style="display: none;"> </button> <button title="Volume" type="button" class="control"><img src="" alt="volume icon" width="20" height="20">
+      <!----> <input type="range" min="0" step="0.01" max="1" style="display: none;"></button>
+  </div>
 </div>
 `;

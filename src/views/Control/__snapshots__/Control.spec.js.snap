@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component Control snapshots should match snapshot with single icon 1`] = `
+<button title="Stop" type="button" class="control"><img src="" alt="stop icon" width="20" height="20">
+  <!----> </button>
+`;
+
+exports[`Component Control snapshots should match snapshot with two icon and showing inactive icon 1`] = `<button title="Stop" type="button" class="control"><img src="" alt="stop icon" width="20" height="20" style="display: none;"> <img src="" alt="play icon" width="20" height="20"> </button>`;
