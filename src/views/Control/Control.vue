@@ -68,17 +68,14 @@ export default {
 </script>
 
 <style scoped lang="less">
-// TODO color lib
-@player-bg: #fff;
-@player-border-color: darken(@player-bg, 12%);
-@player-link-color: darken(@player-bg, 75%);
+@import '~@/style/variables.less';
 
 .control {
   display: block;
   padding: 16px;
   border-right: 1px solid @player-border-color;
   line-height: 0;
-  color: @player-link-color;
+  color: @player-control-color;
 
   &:last-child {
     border-right: none;

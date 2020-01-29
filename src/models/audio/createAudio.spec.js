@@ -7,16 +7,27 @@ describe('Model audio', () => {
   beforeAll(() => {
     originHTMLMediaElement = window.HTMLMediaElement.prototype;
 
-    Object.assign(
-      window.HTMLMediaElement.prototype,
-      {
-        play() {},
-        pause() {},
-        addEventListener(event, callback) {
+    Object.defineProperties(window.HTMLMediaElement.prototype, {
+      readyState: {
+        get() {
+          return 2;
+        },
+      },
+
+      play: {
+        value() {},
+      },
+
+      pause: {
+        value() {},
+      },
+
+      addEventListener: {
+        value(event, callback) {
           map[event] = callback;
         },
       },
-    );
+    });
   });
 
   afterAll(() => {
@@ -49,6 +60,7 @@ describe('Model audio', () => {
       const audio = createAudio({});
 
       audio.mute();
+      expect(audio.element.volume).toBe(0);
       audio.mute();
       expect(audio.element.volume).toBe(0.35);
     });
@@ -58,7 +70,7 @@ describe('Model audio', () => {
 
       audio.mute();
       audio.mute();
-      expect(audio.muted).toBe(true);
+      expect(!audio.muted).toBe(true);
     });
   });
 

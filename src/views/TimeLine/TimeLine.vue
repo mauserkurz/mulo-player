@@ -66,14 +66,11 @@ export default {
 </script>
 
 <style scoped lang="less">
-// TODO lib color
-@player-bg: #fff;
-@player-border-color: darken(@player-bg, 12%);
-@player-link-color: darken(@player-bg, 75%);
-@player-progress-color: @player-border-color;
-@player-seeker-color: @player-link-color;
+@import '~@/style/variables.less';
 
 .time-line {
+  border-right: 1px solid @player-border-color;
+
   &__progress {
     position: relative;
     z-index: 0;
@@ -88,7 +85,7 @@ export default {
     top: 0;
     left: 0;
     bottom: 0;
-    background-color: @player-seeker-color;
+    background-color: @player-line-color;
   }
 
   &__timers {

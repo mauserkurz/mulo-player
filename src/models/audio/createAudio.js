@@ -1,6 +1,5 @@
 import { DEFAULT_VOLUME } from '@/const';
 
-// TODO set default volume as DEFAULT_VOLUME
 class AudioAPI {
   #playing = false;
 
@@ -13,9 +12,10 @@ class AudioAPI {
   durationSeconds = 0;
 
 
-  constructor({ autoPlay = false, src = '', AudioElement = Audio } = {}) {
+  constructor({ autoPlay = false, src = '', AudioElement = Audio }) {
     this.autoPlay = autoPlay;
     this.element = new AudioElement(src);
+    this.element.volume = this.previousVolume;
 
     this.element.addEventListener('timeupdate', () => {
       this.currentSeconds = this.element.currentTime;
@@ -52,10 +52,10 @@ class AudioAPI {
   mute() {
     if (this.muted) {
       this.element.volume = this.previousVolume;
+    } else {
+      this.previousVolume = this.element.volume;
+      this.element.volume = 0;
     }
-
-    this.previousVolume = this.element.volume;
-    this.element.volume = 0;
   }
 
   stop() {

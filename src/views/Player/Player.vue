@@ -35,7 +35,7 @@
       title="Mute"
       iconName="sound"
       active-icon-name="mute"
-      @click="() => audio.mute()"/>
+      @click="mute"/>
 
     <Control
       title="Volume"
@@ -59,7 +59,6 @@ import createAudio from '@/models/audio/createAudio';
 import TimeLine from '@/views/TimeLine/TimeLine.vue';
 import Control from '@/views/Control/Control.vue';
 
-// TODO toggle icons while song is stopped
 export default {
   name: 'Player',
 
@@ -103,8 +102,14 @@ export default {
       this.audio.playing = !this.audio.playing;
     },
 
-    switchLoop() {
+    async switchLoop() {
       this.audio.element.loop = !this.audio.element.loop;
+      await this.$forceUpdate();
+    },
+
+    async mute() {
+      this.audio.mute();
+      await this.$forceUpdate();
     },
 
     setShowVolume(state) {
@@ -115,12 +120,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-// TODO lib color
-@player-bg: #fff;
-@player-border-color: darken(@player-bg, 12%);
-@player-link-color: darken(@player-bg, 75%);
-@player-seeker-color: @player-link-color;
-@player-text-color: @player-link-color;
+@import '~@/style/variables.less';
 
 .player {
   display: inline-flex;
