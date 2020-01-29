@@ -15,7 +15,6 @@
     <TimeLine
       :current-seconds="audio.currentSeconds"
       :duration-seconds="audio.durationSeconds"
-      :playing="audio.playing"
       @rewind="rewind"/>
 
     <Control

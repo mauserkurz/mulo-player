@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component TimeLine snapshots should match snapshot 1`] = `
+<div class="time-line">
+  <div title="Time played : Total time" class="time-line__progress">
+    <div class="time-line__line" style="width: 2.2708840227088403%;"></div>
+  </div>
+  <div class="time-line__timers">
+    <div class="time-line__current">01:52</div>
+    <div class="time-line__total">01:22:12</div>
+  </div>
+</div>
+`;

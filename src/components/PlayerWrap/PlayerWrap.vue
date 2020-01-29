@@ -9,7 +9,7 @@
 import Player from '@/views/Player/Player.vue';
 
 export default {
-  name: 'Auth',
+  name: 'PlayerWrap',
   components: { Player },
 
   data() {

@@ -30,11 +30,6 @@ export default {
       type: Number,
       required: true,
     },
-
-    playing: {
-      type: Boolean,
-      required: true,
-    },
   },
 
   computed: {
@@ -53,9 +48,6 @@ export default {
 
   methods: {
     locate(event) {
-      if (!this.playing) {
-        return;
-      }
       const { left, width } = this.$refs.progress.getBoundingClientRect();
       const position = (event.clientX - left) / width;
 
