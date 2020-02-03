@@ -88,6 +88,16 @@ export default {
     };
   },
 
+  watch: {
+    file(value) {
+      this.audio.element.src = value;
+    },
+
+    autoPlay(value) {
+      this.audio.autoPlay = value;
+    },
+  },
+
   methods: {
     download() {
       window.open(this.file, '_self');
@@ -114,6 +124,11 @@ export default {
     setShowVolume(state) {
       this.showVolume = state;
     },
+  },
+
+  // TODO use or not?
+  beforeDestroy() {
+    this.audio.element.pause();
   },
 };
 </script>

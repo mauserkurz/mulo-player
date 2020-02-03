@@ -2,6 +2,9 @@
 
 exports[`Component PlayerWrap snapshots should match snapshot 1`] = `
 <div class="player-wrap"><img alt="App logo" src="@/assets/logo.svg" width="256" height="256">
+  <div role="list" class="v-list v-sheet v-sheet--tile theme--light v-list--rounded">
+    <div role="listbox" class="v-item-group theme--light v-list-item-group primary--text"></div>
+  </div>
   <div class="player"><button title="Stop" type="button" class="control"><img src="" alt="stop icon" width="20" height="20">
       <!----> </button> <button title="Play/Pause" type="button" class="control"><img src="" alt="pause icon" width="20" height="20"> <img src="" alt="play icon" width="20" height="20" style="display: none;"> </button>
     <div class="time-line">

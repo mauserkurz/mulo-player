@@ -5,8 +5,6 @@ class AudioAPI {
 
   previousVolume = DEFAULT_VOLUME;
 
-  loaded = false;
-
   currentSeconds = 0;
 
   durationSeconds = 0;
@@ -23,11 +21,9 @@ class AudioAPI {
 
     this.element.addEventListener('loadeddata', () => {
       if (this.element.readyState >= 2) {
-        this.loaded = true;
         this.durationSeconds = this.element.duration;
       }
-      this.#playing = this.autoPlay;
-      return this.#playing;
+      this.playing = this.autoPlay;
     });
   }
 
