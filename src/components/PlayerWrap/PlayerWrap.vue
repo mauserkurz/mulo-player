@@ -1,15 +1,27 @@
 <template>
   <div class="player-wrap">
-    <img alt="App logo" src="@/assets/logo.svg" width="256" height="256">
+    <a href="/" title="Music lover">
+      <img alt="App logo" src="@/assets/logo.svg" width="64" height="64">
+    </a>
     <v-list rounded>
       <v-list-item-group color="primary">
         <v-list-item
           v-for="track of trackList"
           :key="track.id"
+          :class="{ 'v-list-item--active': isTrackSelected(track.id) }"
           @click="switchTrack(track.id)">
+          <v-list-item-icon @click.stop="getTrack(track.id)">
+            <v-icon
+              v-if="!track.isLoading"
+              v-text="getIcon(track.isLoaded)"/>
+            <v-progress-circular
+              v-else
+              :size="24"
+              indeterminate/>
+          </v-list-item-icon>
+
           <v-list-item-content>
-            <v-list-item-title
-              v-text="track.name"/>
+            <v-list-item-title v-text="track.name"/>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -38,7 +50,20 @@ export default {
   },
 
   methods: {
-    ...mapActions('tracks', ['getTrackList', 'switchTrack']),
+    ...mapActions('tracks', ['getTrack', 'getTrackList', 'switchTrack']),
+
+    isTrackSelected(trackID) {
+      return this.currentTrack.id === trackID;
+    },
+
+    getIcon(isLoaded) {
+      let icon = 'mdi-cloud-download';
+
+      if (isLoaded) {
+        icon = 'mdi-check-circle';
+      }
+      return icon;
+    },
   },
 
   async mounted() {
@@ -48,5 +73,10 @@ export default {
 </script>
 
 <style scoped lang="less">
-.player-wrap {}
+.player-wrap {
+  position: relative;
+  z-index: 0;
+  width: 518px;
+  margin: 20px auto;
+}
 </style>

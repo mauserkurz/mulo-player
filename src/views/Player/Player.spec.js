@@ -118,4 +118,15 @@ describe('Component Player', () => {
       expect(wrapper.vm.audio.element.volume).toBe(0.5);
     });
   });
+
+  describe('props', () => {
+    it('should on file props call reader.readAsDataURL which setup blob to src', () => {
+      const { wrapper } = createWrapper({});
+      const spy = jest.spyOn(wrapper.vm.reader, 'readAsDataURL');
+      const blob = new Blob([], { type: 'audio/mpeg' });
+
+      wrapper.setProps({ file: blob });
+      expect(spy).toHaveBeenCalledWith(blob);
+    });
+  });
 });

@@ -137,6 +137,8 @@ export default {
 @import '~@/style/variables.less';
 
 .player {
+  position: sticky;
+  bottom: 20px;
   display: inline-flex;
   border: 1px solid @player-border-color;
   border-radius: 5px;

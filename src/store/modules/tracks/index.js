@@ -1,7 +1,8 @@
 import api from '@/api/';
 import createTrack from '@/models/track/createTrack';
 
-// TODO unit test
+const findTrack = state => trackID => state.trackList.find(({ id }) => id === trackID);
+
 export default {
   namespaced: true,
 
@@ -18,7 +19,7 @@ export default {
       return getters.track(state.currentTrackID);
     },
 
-    track: state => trackID => state.trackList.find(({ id }) => id === trackID),
+    track: findTrack,
   },
 
   mutations: {
@@ -26,12 +27,16 @@ export default {
       state.trackList = list;
     },
 
-    SET_CURRENT_TRACK_ID(state, ID) {
-      state.currentTrackID = ID;
+    SET_CURRENT_TRACK_ID(state, trackID) {
+      state.currentTrackID = trackID;
     },
 
     SET_AUDIO_BLOB(state, { trackID, blob }) {
-      state.trackList.find(({ id }) => id === trackID).blob = blob;
+      findTrack(state)(trackID).blob = blob;
+    },
+
+    SET_TRACK_LOADING_STATE(state, { trackID, isLoading }) {
+      findTrack(state)(trackID).isLoading = isLoading;
     },
   },
 
@@ -43,8 +48,7 @@ export default {
       try {
         response = await api.getAllTracksInfo({ userID });
       } catch (error) {
-        // TODO show 404 warning or error
-        window.console.error(error.response);
+        window.console.error(error);
         return;
       }
       const { tracks } = response.data;
@@ -63,12 +67,14 @@ export default {
       }
       let response = {};
 
+      commit('SET_TRACK_LOADING_STATE', { trackID, isLoading: true });
       try {
         response = await api.loadTrack({ userID, trackID });
       } catch (error) {
-        // TODO show 404 warning or error
-        window.console.error(error.response);
+        window.console.error(error);
         return;
+      } finally {
+        commit('SET_TRACK_LOADING_STATE', { trackID, isLoading: false });
       }
       commit('SET_AUDIO_BLOB', { trackID, blob: response.data });
     },

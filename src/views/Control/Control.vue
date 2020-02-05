@@ -71,7 +71,11 @@ export default {
 @import '~@/style/variables.less';
 
 .control {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
   padding: 16px;
   border-right: 1px solid @player-border-color;
   line-height: 0;
