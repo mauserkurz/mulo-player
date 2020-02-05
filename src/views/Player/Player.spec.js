@@ -7,7 +7,7 @@ import Player from './Player.vue';
 const localVue = createLocalVue();
 
 describe('Component Player', () => {
-  const defaultProps = { file: 'some-file.mp3' };
+  const defaultProps = { file: new Blob([], { type: 'audio/mpeg' }) };
   const createWrapper = ({ isWithoutStubs = false, propsData = {}, ...options } = {}) => {
     const renderer = isWithoutStubs ? mount : shallowMount;
     const wrapper = renderer(Player, {
@@ -84,11 +84,13 @@ describe('Component Player', () => {
 
     it('should start download mp3 after click on download control', () => {
       const { wrapper } = createWrapper({ stubs: { Control } });
-      const spy = jest.fn();
+      const spyCreateObjectURL = jest.fn();
+      const spyLinkClick = jest.spyOn(wrapper.vm.link, 'click');
 
-      window.open = spy;
+      window.URL.createObjectURL = spyCreateObjectURL;
       wrapper.findAll(Control).at(2).trigger('click');
-      expect(spy).toHaveBeenCalledWith('some-file.mp3', '_self');
+      expect(spyCreateObjectURL).toHaveBeenCalledWith(defaultProps.file);
+      expect(spyLinkClick).toHaveBeenCalled();
     });
 
     it('should toggle element.loop after click on loop control', () => {

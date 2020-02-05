@@ -94,7 +94,7 @@ describe('Model audio', () => {
     it('should set playing to false', () => {
       const audio = createAudio({});
 
-      audio.playing = true;
+      audio.switchPlaying(true);
       audio.stop();
       expect(audio.playing).toBe(false);
     });
@@ -110,12 +110,13 @@ describe('Model audio', () => {
       expect(audio.currentSeconds).toBe(currentTime);
     });
 
-    it('should on loadeddata event set playing', () => {
-      const autoPlay = true;
-      const audio = createAudio({ autoPlay });
+    it('should on loadeddata event after switchPlaying call play track', () => {
+      const audio = createAudio({});
+      const spy = jest.spyOn(audio.element, 'play');
 
+      audio.switchPlaying(true);
       map.loadeddata();
-      expect(audio.playing).toBe(autoPlay);
+      expect(spy).toHaveBeenCalled();
     });
   });
 });

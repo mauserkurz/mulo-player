@@ -10,8 +10,7 @@ class AudioAPI {
   durationSeconds = 0;
 
 
-  constructor({ autoPlay = false, src = '', AudioElement = Audio }) {
-    this.autoPlay = autoPlay;
+  constructor({ src = '', AudioElement = Audio }) {
     this.element = new AudioElement(src);
     this.element.volume = this.previousVolume;
 
@@ -23,7 +22,7 @@ class AudioAPI {
       if (this.element.readyState >= 2) {
         this.durationSeconds = this.element.duration;
       }
-      this.playing = this.autoPlay;
+      this.switchPlaying(this.#playing);
     });
   }
 
@@ -35,10 +34,10 @@ class AudioAPI {
     return this.#playing;
   }
 
-  set playing(value) {
-    this.#playing = value;
+  switchPlaying(state = !this.#playing) {
+    this.#playing = state;
 
-    if (value) {
+    if (state) {
       this.element.play();
     } else {
       this.element.pause();
@@ -55,7 +54,7 @@ class AudioAPI {
   }
 
   stop() {
-    this.playing = false;
+    this.switchPlaying(false);
     this.element.currentTime = 0;
   }
 }

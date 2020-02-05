@@ -6,7 +6,7 @@
         <v-list-item
           v-for="track of trackList"
           :key="track.id"
-          @click="SET_CURRENT_TRACK_ID(track.id)">
+          @click="switchTrack(track.id)">
           <v-list-item-content>
             <v-list-item-title
               v-text="track.name"/>
@@ -14,14 +14,16 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-    <Player :file="URL"/>
+    <Player
+      :file="currentTrack.blob"
+      :file-name="currentTrack.name"/>
   </div>
 </template>
 
 <script>
 import {
   mapState,
-  mapMutations,
+  mapGetters,
   mapActions,
 } from 'vuex';
 import Player from '@/views/Player/Player.vue';
@@ -31,20 +33,15 @@ export default {
   components: { Player },
 
   computed: {
-    ...mapState('tracks', ['trackList', 'currentTrackID']),
-
-    URL() {
-      return `http://localhost:3000/api/users/12345/soundtracks/${this.currentTrackID}.mp3`;
-    },
+    ...mapState('tracks', ['trackList']),
+    ...mapGetters('tracks', ['currentTrack']),
   },
 
   methods: {
-    ...mapMutations('tracks', ['SET_CURRENT_TRACK_ID']),
-    ...mapActions('tracks', ['getTrackList']),
+    ...mapActions('tracks', ['getTrackList', 'switchTrack']),
   },
 
   async mounted() {
-    // TODO add spinner
     await this.getTrackList();
   },
 };

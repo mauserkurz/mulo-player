@@ -10,7 +10,7 @@
       title="Play/Pause"
       iconName="pause"
       active-icon-name="play"
-      @click="switchPlaying"/>
+      @click="() => audio.switchPlaying()"/>
 
     <TimeLine
       :current-seconds="audio.currentSeconds"
@@ -68,47 +68,48 @@ export default {
 
   props: {
     file: {
-      type: String,
-      default: '',
+      type: Blob,
+      default: null,
     },
 
-    autoPlay: {
-      type: Boolean,
-      default: false,
+    fileName: {
+      type: String,
+      default: 'track.mp3',
     },
   },
 
   data() {
+    const reader = new FileReader();
+    const link = document.createElement('a');
+
+    reader.onload = (event) => {
+      this.audio.element.src = event.target.result;
+    };
+    link.target = '_blank';
+
     return {
-      audio: createAudio({
-        src: this.file,
-        autoPlay: this.autoPlay,
-      }),
+      audio: createAudio({}),
       showVolume: false,
+      reader,
+      link,
     };
   },
 
   watch: {
     file(value) {
-      this.audio.element.src = value;
-    },
-
-    autoPlay(value) {
-      this.audio.autoPlay = value;
+      this.reader.readAsDataURL(value);
     },
   },
 
   methods: {
     download() {
-      window.open(this.file, '_self');
+      this.link.href = window.URL.createObjectURL(this.file);
+      this.link.download = this.fileName;
+      this.link.click();
     },
 
     rewind(position) {
       this.audio.element.currentTime = this.audio.element.duration * position;
-    },
-
-    switchPlaying() {
-      this.audio.playing = !this.audio.playing;
     },
 
     async switchLoop() {
@@ -126,7 +127,6 @@ export default {
     },
   },
 
-  // TODO use or not?
   beforeDestroy() {
     this.audio.element.pause();
   },

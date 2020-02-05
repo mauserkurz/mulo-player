@@ -1,10 +1,10 @@
 class Track {
-  constructor({ id = '', name = '', link = '' }) {
+  constructor({ id = '', name = '' }) {
     this.id = id;
     this.name = name;
-    this.link = link;
+    this.blob = null;
   }
 }
 
-// TODO unit?
-export default ({ id, name, link }) => new Track({ id, name, link });
+// TODO unit
+export default ({ id, name }) => new Track({ id, name });

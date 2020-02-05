@@ -20,8 +20,11 @@ export default {
     return API.get(`users/${userID}/soundtracks`);
   },
 
-  async getTrack({ userID, trackID }) {
-    return API.get(`users/${userID}/soundtracks/${trackID}.mp3`);
+  async loadTrack({ userID, trackID }) {
+    return API.get(`users/${userID}/soundtracks/${trackID}.mp3`, {
+      responseType: 'blob',
+      Accept: 'audio/mpeg',
+    }, { timeout: 3000 });
   },
 
   async sendTrack({ userID }) {
