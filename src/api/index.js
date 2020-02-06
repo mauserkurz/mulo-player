@@ -3,7 +3,7 @@ import { API_URL as baseURL } from '@/const';
 
 const API = axios.create({
   baseURL,
-  timeout: 1000,
+  timeout: 5000,
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -24,7 +24,7 @@ export default {
     return API.get(`user/${userID}/soundtracks/${trackID}.mp3`, {
       responseType: 'blob',
       Accept: 'audio/mpeg',
-    }, { timeout: 3000 });
+    });
   },
 
   async sendTrack({ userID }) {
