@@ -17,17 +17,17 @@ export default {
   },
 
   async getAllTracksInfo({ userID }) {
-    return API.get(`users/${userID}/soundtracks`);
+    return API.get(`user/${userID}/soundtracks`);
   },
 
   async loadTrack({ userID, trackID }) {
-    return API.get(`users/${userID}/soundtracks/${trackID}.mp3`, {
+    return API.get(`user/${userID}/soundtracks/${trackID}.mp3`, {
       responseType: 'blob',
       Accept: 'audio/mpeg',
     }, { timeout: 3000 });
   },
 
   async sendTrack({ userID }) {
-    return API.post(`users/${userID}/soundtracks/upload`);
+    return API.post(`user/${userID}/soundtracks/upload`);
   },
 };
