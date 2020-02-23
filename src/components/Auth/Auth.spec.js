@@ -29,6 +29,16 @@ describe('Component Auth', () => {
 
     return { wrapper, store };
   };
+  let originGetUser;
+
+  beforeAll(() => {
+    originGetUser = user.getUser;
+    user.actions.getUser = () => Promise.resolve();
+  });
+
+  afterAll(() => {
+    user.actions.getUser = originGetUser;
+  });
 
   describe('snapshots', () => {
     it('should match snapshot', () => {
@@ -95,6 +105,18 @@ describe('Component Auth', () => {
 
       wrapper.find(AuthForm).vm.$emit('toggle-type', payload);
       expect(spy.mock.calls[0][1]).toBe(payload);
+    });
+  });
+
+  describe('hooks', () => {
+    it('should call getUser action after mount', () => {
+      const userCopy = clone(user);
+      const spy = jest.fn();
+
+      userCopy.actions.getUser = spy;
+      createWrapper({ modules: { user: userCopy }, isWithoutStubs: true });
+
+      expect(spy).toHaveBeenCalled();
     });
   });
 });

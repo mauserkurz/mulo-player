@@ -1,8 +1,19 @@
 <template>
   <div class="player-wrap">
-    <a href="/" title="Music lover">
-      <img alt="App logo" src="@/assets/logo.svg" width="64" height="64">
-    </a>
+    <v-row
+      align="center"
+      justify="space-between">
+      <a href="/player" title="Music lover">
+        <img alt="App logo" src="@/assets/logo.svg" width="64" height="64">
+      </a>
+
+      <v-btn
+        color="primary"
+        outlined
+        @click="logout">
+        Logout
+      </v-btn>
+    </v-row>
     <v-list rounded>
       <v-list-item-group color="primary">
         <v-list-item
@@ -50,6 +61,7 @@ export default {
   },
 
   methods: {
+    ...mapActions('user', ['logout']),
     ...mapActions('tracks', ['getTrack', 'getTrackList', 'switchTrack']),
 
     isTrackSelected(trackID) {

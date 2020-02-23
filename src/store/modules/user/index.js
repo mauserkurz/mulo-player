@@ -21,6 +21,8 @@ export default {
     login: '',
     error: '',
     isAuthLoading: false,
+    isUserDataLoading: false,
+    isLogoutProcessing: false,
   },
 
   getters: {
@@ -45,10 +47,24 @@ export default {
     SET_IS_AUTH_LOADING(state, mode) {
       state.isAuthLoading = mode;
     },
+
+    SET_IS_USER_DATE_LOADING(state, mode) {
+      state.isUserDataLoading = mode;
+    },
+
+    SET_IS_LOGOUT_PROCESSING(state, mode) {
+      state.isLogoutProcessing = mode;
+    },
   },
 
   actions: {
-    async auth({ commit }, { login, password, type }) {
+    setUser({ commit }, data) {
+      commit('SET_USER_ID', data.user_id);
+      commit('SET_LOGIN', data.login);
+      router.push({ path: 'player' });
+    },
+
+    async auth({ commit, dispatch }, { login, password, type }) {
       const methodMap = {
         [AUTH_FORM_TYPE_MAP.SIGN_IN]: 'signIn',
         [AUTH_FORM_TYPE_MAP.SIGN_UP]: 'signUp',
@@ -78,9 +94,46 @@ export default {
       // After successful request clear error, write user id and login
       // then show player itself
       commit('SET_AUTH_ERROR', '');
-      commit('SET_USER_ID', response.data.user_id);
-      commit('SET_LOGIN', response.data.login);
-      router.push({ path: 'player' });
+      dispatch('setUser', response.data);
+    },
+
+    async getUser({ commit, dispatch }) {
+      let response;
+
+      commit('SET_IS_USER_DATE_LOADING', true);
+      try {
+        response = await api.getUser();
+      } catch (error) {
+        if (path(['response', 'status'], error) !== STATUS_MAP.UNAUTHORIZED) {
+          window.console.error(error);
+        }
+        return;
+      } finally {
+        commit('SET_IS_USER_DATE_LOADING', false);
+      }
+      dispatch('setUser', response.data);
+    },
+
+    async logout({ state, commit }) {
+      if (state.isLogoutProcessing) {
+        return;
+      }
+      commit('SET_IS_LOGOUT_PROCESSING', true);
+
+      try {
+        await api.logout();
+      } catch (error) {
+        if (path(['response', 'status'], error) !== STATUS_MAP.UNAUTHORIZED) {
+          window.console.error(error);
+        }
+        commit('SET_IS_LOGOUT_PROCESSING', false);
+        return;
+      }
+
+      commit('SET_USER_ID', '');
+      commit('SET_LOGIN', '');
+      await router.push({ path: '/' });
+      commit('SET_IS_LOGOUT_PROCESSING', false);
     },
 
     clearError({ commit }) {

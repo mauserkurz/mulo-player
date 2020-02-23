@@ -128,5 +128,14 @@ describe('Component Player', () => {
       wrapper.setProps({ file: blob });
       expect(spy).toHaveBeenCalledWith(blob);
     });
+
+    it('should on file null props don`t call reader.readAsDataURL', () => {
+      const { wrapper } = createWrapper({});
+      const spy = jest.spyOn(wrapper.vm.reader, 'readAsDataURL');
+      const blob = null;
+
+      wrapper.setProps({ file: blob });
+      expect(spy).not.toHaveBeenCalledWith(blob);
+    });
   });
 });

@@ -3,8 +3,9 @@ import { API_URL as baseURL } from '@/const';
 
 const API = axios.create({
   baseURL,
-  timeout: 5000,
   headers: { 'Content-Type': 'application/json' },
+  withCredentials: true,
+  timeout: 2000,
 });
 
 export default {
@@ -16,6 +17,14 @@ export default {
     return API.post('registration', { login, password });
   },
 
+  async logout() {
+    return API.post('logout', {});
+  },
+
+  async getUser() {
+    return API.post('user', {});
+  },
+
   async getAllTracksInfo({ userID }) {
     return API.get(`user/${userID}/soundtracks`);
   },
@@ -24,6 +33,7 @@ export default {
     return API.get(`user/${userID}/soundtracks/${trackID}.mp3`, {
       responseType: 'blob',
       Accept: 'audio/mpeg',
+      timeout: 60 * 1000,
     });
   },
 

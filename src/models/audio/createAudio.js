@@ -3,6 +3,8 @@ import { DEFAULT_VOLUME } from '@/const';
 class AudioAPI {
   #playing = false;
 
+  #playPromise = null;
+
   previousVolume = DEFAULT_VOLUME;
 
   currentSeconds = 0;
@@ -34,12 +36,17 @@ class AudioAPI {
     return this.#playing;
   }
 
-  switchPlaying(state = !this.#playing) {
+  async switchPlaying(state = !this.#playing) {
     this.#playing = state;
 
-    if (state) {
-      this.element.play();
-    } else {
+    if (state && this.element.src !== window.location.href) {
+      this.#playPromise = this.element.play();
+    }
+
+    if (!state) {
+      if (this.#playPromise && this.#playPromise.constructor === Promise) {
+        await this.#playPromise;
+      }
       this.element.pause();
     }
   }

@@ -10,7 +10,18 @@
           cols="12"
           sm="8"
           md="4">
+          <v-row
+            v-if="isUserDataLoading"
+            align="center"
+            justify="center">
+            <v-progress-circular
+              :size="60"
+              indeterminate
+              :color="$vuetify.theme.themes.light.primary"/>
+          </v-row>
+
           <AuthForm
+            v-else
             :loading="isAuthLoading"
             :error="error"
             @submit="auth"
@@ -31,11 +42,15 @@ export default {
   components: { AuthForm },
 
   computed: {
-    ...mapState('user', ['error', 'isAuthLoading']),
+    ...mapState('user', ['error', 'isAuthLoading', 'isUserDataLoading']),
   },
 
   methods: {
-    ...mapActions('user', ['auth', 'clearError']),
+    ...mapActions('user', ['auth', 'getUser', 'clearError']),
+  },
+
+  async mounted() {
+    await this.getUser();
   },
 };
 </script>

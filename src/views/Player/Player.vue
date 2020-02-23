@@ -97,7 +97,9 @@ export default {
 
   watch: {
     file(value) {
-      this.reader.readAsDataURL(value);
+      if (value) {
+        this.reader.readAsDataURL(value);
+      }
     },
   },
 

@@ -163,5 +163,142 @@ describe('Module user', () => {
           .toBe('Internal Server Error: Error: Request failed with status code 500');
       });
     });
+
+    describe('getUser fetch user data and save it', () => {
+      it('should call API method', async () => {
+        const userCopy = clone(user);
+        const store = createStore({ user: userCopy });
+        const handler = api.getUser;
+        const spy = jest.fn(() => Promise.resolve({
+          status: 200,
+          data: { user_id: '012345', login: 'user@gmail.com' },
+        }));
+
+        api.getUser = spy;
+        await store.dispatch('user/getUser');
+        api.signUp = handler;
+        expect(spy).toHaveBeenCalled();
+      });
+
+      it('should call API method once after two quick call', () => {
+        const userCopy = clone(user);
+        const store = createStore({ user: userCopy });
+        const handler = api.logout;
+        const spy = jest.fn(() => Promise.resolve({ status: 200 }));
+
+        api.logout = spy;
+        store.dispatch('user/logout');
+        store.dispatch('user/logout');
+        api.logout = handler;
+        expect(spy).toBeCalledTimes(1);
+      });
+
+      it('should after request save user id', async () => {
+        const userCopy = clone(user);
+        const store = createStore({ user: userCopy });
+        const userID = '012345';
+        const handler = api.getUser;
+
+        api.getUser = jest.fn(async () => ({ data: { user_id: userID, login: 'user@gmail.com' } }));
+        await store.dispatch('user/getUser');
+        api.getUser = handler;
+        expect(store.state.user.userID).toBe(userID);
+      });
+
+      it('should after request save user login', async () => {
+        const userCopy = clone(user);
+        const store = createStore({ user: userCopy });
+        const login = 'user@gmail.com';
+        const handler = api.getUser;
+
+        api.getUser = jest.fn(async () => ({ data: { user_id: '012345', login } }));
+        await store.dispatch('user/getUser');
+        api.getUser = handler;
+        expect(store.state.user.login).toBe(login);
+      });
+
+      it('should failed request don`t change user data', async () => {
+        const userCopy = clone(user);
+        const store = createStore({ user: userCopy });
+        const handler = api.getUser;
+        const error = new Error();
+
+        error.response = { status: 401, data: {} };
+        api.getUser = jest.fn(() => Promise.reject(error));
+        await store.dispatch('user/getUser');
+        api.getUser = handler;
+        expect(store.state.user.userID).toBe('');
+      });
+    });
+
+    describe('logout exit from app and clear user data', () => {
+      it('should call API method', async () => {
+        const userCopy = clone(user);
+        const store = createStore({ user: userCopy });
+        const handler = api.logout;
+        const spy = jest.fn(() => Promise.resolve({ status: 200 }));
+
+        api.logout = spy;
+        await store.dispatch('user/logout');
+        api.logout = handler;
+        expect(spy).toHaveBeenCalled();
+      });
+
+      it('should after request clear user id', async () => {
+        const userCopy = clone(user);
+
+        userCopy.state.userID = '012345';
+        const store = createStore({ user: userCopy });
+        const handler = api.logout;
+
+        api.logout = jest.fn(() => Promise.resolve({ status: 200 }));
+        await store.dispatch('user/logout');
+        api.logout = handler;
+        expect(store.state.user.userID).toBe('');
+      });
+
+      it('should after request clear user login', async () => {
+        const userCopy = clone(user);
+
+        userCopy.state.login = 'user@gmail.com';
+        const store = createStore({ user: userCopy });
+        const handler = api.logout;
+
+        api.logout = jest.fn(() => Promise.resolve({ status: 200 }));
+        await store.dispatch('user/logout');
+        api.logout = handler;
+        expect(store.state.user.login).toBe('');
+      });
+
+      it('should after request redirect to root', async () => {
+        const userCopy = clone(user);
+        const store = createStore({ user: userCopy });
+        const handler = api.logout;
+        const spy = jest.fn();
+
+        router.push = spy;
+        api.logout = jest.fn(() => Promise.resolve({ status: 200 }));
+        await store.dispatch('user/logout');
+        router.push = () => {};
+        api.logout = handler;
+        expect(spy).toHaveBeenCalledWith({ path: '/' });
+      });
+
+      it('should failed request don`t clear user data', async () => {
+        const userCopy = clone(user);
+        const userID = '012345';
+
+        userCopy.state.userID = userID;
+        const store = createStore({ user: userCopy });
+        const handler = api.logout;
+        const error = new Error();
+
+        error.response = { status: 401 };
+        api.logout = jest.fn(() => Promise.reject(error));
+        await store.dispatch('user/logout');
+        api.logout = handler;
+        expect(store.state.user.userID).toBe(userID);
+      });
+    });
   });
 });

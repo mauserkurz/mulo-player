@@ -54,4 +54,17 @@ describe('Component PlayerWrap', () => {
       expect(wrapper.html()).toMatchSnapshot();
     });
   });
+
+  describe('events', () => {
+    it('should call logout action after click on logout button', () => {
+      const userCopy = clone(user);
+      const spy = jest.fn();
+
+      userCopy.actions.logout = spy;
+      const { wrapper } = createWrapper({ modules: { user: userCopy }, isWithoutStubs: true });
+
+      wrapper.find('.v-btn').trigger('click');
+      expect(spy).toHaveBeenCalled();
+    });
+  });
 });

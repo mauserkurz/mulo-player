@@ -100,6 +100,43 @@ describe('Model audio', () => {
     });
   });
 
+  describe('method switchPlaying', () => {
+    it('should call audio.play with true state', () => {
+      const audio = createAudio({});
+
+      audio.element.play = jest.fn();
+      audio.switchPlaying(true);
+      expect(audio.element.play).toHaveBeenCalled();
+    });
+
+    it('should don`t call audio.play with true state and src with empty blob', () => {
+      const audio = createAudio({});
+
+      audio.element.src = window.location.href;
+      audio.element.play = jest.fn();
+      audio.switchPlaying(true);
+      expect(audio.element.play).not.toHaveBeenCalled();
+    });
+
+    it('should call audio.pause with false state', () => {
+      const audio = createAudio({});
+
+      audio.element.pause = jest.fn();
+      audio.switchPlaying(false);
+      expect(audio.element.pause).toHaveBeenCalled();
+    });
+
+    it('should not call audio.pause right after audio.play call', () => {
+      const audio = createAudio({});
+
+      audio.element.play = () => new Promise(resolve => setTimeout(resolve), 1000);
+      audio.element.pause = jest.fn();
+      audio.switchPlaying(true);
+      audio.switchPlaying(false);
+      expect(audio.element.pause).not.toHaveBeenCalled();
+    });
+  });
+
   describe('audio events', () => {
     it('should on timeupdate event set currentSeconds', () => {
       const currentTime = 300;
