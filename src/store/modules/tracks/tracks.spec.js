@@ -124,6 +124,47 @@ describe('Module tracks', () => {
           api.getAllTracksInfo = handler;
           expect(spy.mock.calls[0][1]).toEqual(trackList[0].id);
         });
+
+        it('should clear list of tracks if received empty list', async () => {
+          const tracksCopy = clone(tracks);
+          const userCopy = clone(user);
+
+          tracksCopy.state.trackList = [
+            { id: 0, name: 'Band 0 - Track 0' },
+            { id: 1, name: 'Band 1 - Track 1' },
+            { id: 2, name: 'Band 2 - Track 2' },
+            { id: 3, name: 'Band 3 - Track 3' },
+          ];
+          userCopy.state.userID = '01234';
+          const store = createStore({ tracks: tracksCopy, user: userCopy });
+          const handler = api.getAllTracksInfo;
+
+          api.getAllTracksInfo = jest.fn(() => Promise.resolve({
+            status: 200,
+            data: { tracks: [] },
+          }));
+          await store.dispatch('tracks/getTrackList');
+          api.getAllTracksInfo = handler;
+          expect(store.state.tracks.trackList).toEqual([]);
+        });
+
+        it('should clear currentTrackID if received empty track list', async () => {
+          const tracksCopy = clone(tracks);
+          const userCopy = clone(user);
+
+          tracksCopy.state.currentTrackID = 3;
+          userCopy.state.userID = '01234';
+          const store = createStore({ tracks: tracksCopy, user: userCopy });
+          const handler = api.getAllTracksInfo;
+
+          api.getAllTracksInfo = jest.fn(() => Promise.resolve({
+            status: 200,
+            data: { tracks: [] },
+          }));
+          await store.dispatch('tracks/getTrackList');
+          api.getAllTracksInfo = handler;
+          expect(store.state.tracks.currentTrackID).toBeNull();
+        });
       });
 
       describe('getTrack action', () => {

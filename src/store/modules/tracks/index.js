@@ -56,6 +56,9 @@ export default {
       if (tracks.length > 0) {
         commit('SET_TRACK_LIST', tracks.map(createTrack));
         await dispatch('switchTrack', response.data.tracks[0].id);
+      } else {
+        commit('SET_TRACK_LIST', []);
+        commit('SET_CURRENT_TRACK_ID', null);
       }
     },
 
