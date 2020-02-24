@@ -1,4 +1,5 @@
 import { mount, shallowMount, createLocalVue } from '@vue/test-utils';
+import flushPromises from 'flush-promises';
 import clone from 'ramda/src/clone';
 import Vuex from 'vuex';
 import vuetify from '@/plugins/vuetify';
@@ -63,8 +64,40 @@ describe('Component PlayerWrap', () => {
       userCopy.actions.logout = spy;
       const { wrapper } = createWrapper({ modules: { user: userCopy }, isWithoutStubs: true });
 
-      wrapper.find('.v-btn').trigger('click');
+      wrapper.find('.player-header').vm.$emit('logout');
       expect(spy).toHaveBeenCalled();
+    });
+
+    it('should open drawer after click on cross button', async () => {
+      const { wrapper } = createWrapper({ isWithoutStubs: true });
+
+      wrapper.find('.player-wrap__footer .v-btn').trigger('click');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.find('.drawer').vm.value).toBe(true);
+    });
+
+    it('should call sendFile action on submit event from UploadForm', () => {
+      const file = new File([], 'track', { type: 'audio/mpeg' });
+      const tracksCopy = clone(tracks);
+      const spy = jest.fn();
+
+      tracksCopy.actions.sendFile = spy;
+      const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
+
+      wrapper.find('.upload-form').vm.$emit('submit', file);
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should open drawer after successful file sending', async () => {
+      const file = new File([], 'track', { type: 'audio/mpeg' });
+      const tracksCopy = clone(tracks);
+
+      tracksCopy.actions.sendFile = () => Promise.resolve(true);
+      const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
+
+      wrapper.find('.upload-form').vm.$emit('submit', file);
+      await flushPromises();
+      expect(wrapper.find('.drawer').vm.value).toBe(false);
     });
   });
 });

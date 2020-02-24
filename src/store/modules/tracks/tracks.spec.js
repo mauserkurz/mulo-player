@@ -248,6 +248,81 @@ describe('Module tracks', () => {
           expect(store.state.tracks.currentTrackID).toBe(trackID);
         });
       });
+
+      describe('sendFile handle music file uploading to server and add file in client', () => {
+        it('should call API method', async () => {
+          const userCopy = clone(user);
+          const tracksCopy = clone(tracks);
+          const userID = '012345';
+          const file = new File([], 'track', { type: 'audio/mpeg' });
+
+          userCopy.state.userID = userID;
+          const store = createStore({ user: userCopy, tracks: tracksCopy });
+          const params = { userID, file: { file } };
+          const handler = api.sendTrack;
+          const spy = jest.fn(() => Promise.resolve({
+            status: 200,
+            data: { tracks: [{ id: 0, name: 'track' }] },
+          }));
+
+          api.sendTrack = spy;
+          await store.dispatch('tracks/sendFile', { file });
+          api.sendTrack = handler;
+          expect(spy).toBeCalledWith(params);
+        });
+
+        it('should after request add file', async () => {
+          const userCopy = clone(user);
+          const tracksCopy = clone(tracks);
+          const file = new File([], 'track', { type: 'audio/mpeg' });
+          const store = createStore({ user: userCopy, tracks: tracksCopy });
+          const handler = api.sendTrack;
+
+          api.sendTrack = jest.fn(() => Promise.resolve({
+            status: 200,
+            data: { tracks: [{ id: 0, name: 'track' }] },
+          }));
+          await store.dispatch('tracks/sendFile', { file });
+          api.sendTrack = handler;
+          expect(store.state.tracks.trackList[0].blob).toEqual({ file });
+        });
+
+        it('should after request clear error', async () => {
+          const userCopy = clone(user);
+          const tracksCopy = clone(tracks);
+          const file = new File([], 'track', { type: 'audio/mpeg' });
+
+          tracksCopy.state.sendingFileError = 'Some error';
+          const store = createStore({ user: userCopy, tracks: tracksCopy });
+          const handler = api.sendTrack;
+
+          api.sendTrack = jest.fn(() => Promise.resolve({
+            status: 200,
+            data: { tracks: [{ id: 0, name: 'track' }] },
+          }));
+          await store.dispatch('tracks/sendFile', { file });
+          api.sendTrack = handler;
+          expect(store.state.tracks.sendingFileError).toBe('');
+        });
+
+        it('should after response with 500 status show message', async () => {
+          const userCopy = clone(user);
+          const tracksCopy = clone(tracks);
+          const file = new File([], 'track', { type: 'audio/mpeg' });
+          const error = new Error('Request failed with status code 500');
+
+          error.response = { status: 500, statusText: 'Internal Server Error' };
+          tracksCopy.state.sendingFileError = 'Some error';
+          const store = createStore({ user: userCopy, tracks: tracksCopy });
+          const handler = api.sendTrack;
+
+          api.sendTrack = jest.fn(() => Promise.reject(error));
+          await store.dispatch('tracks/sendFile', { file });
+          api.sendTrack = handler;
+          expect(store.state.tracks.sendingFileError)
+            .toBe('Internal Server Error: Error: Request failed with status code 500');
+        });
+      });
     });
   });
 });

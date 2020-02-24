@@ -37,7 +37,18 @@ export default {
     });
   },
 
-  async sendTrack({ userID }) {
-    return API.post(`user/${userID}/soundtracks/upload`);
+  async sendTrack({ userID, file }) {
+    const data = new FormData();
+
+    data.append('tracks', file, file.name);
+
+    return axios.post(
+      `${baseURL}user/${userID}/soundtracks/upload`,
+      data,
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        withCredentials: true,
+      },
+    );
   },
 };

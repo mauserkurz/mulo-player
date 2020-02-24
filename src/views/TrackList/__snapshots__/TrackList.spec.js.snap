@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component TrackList snapshots should match snapshot 1`] = `
+<div role="list" class="v-list track-list v-sheet v-sheet--tile theme--light v-list--rounded">
+  <div role="listbox" class="v-item-group theme--light v-list-item-group primary--text">
+    <div tabindex="0" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light v-list-item--active">
+      <div class="v-list-item__icon">
+        <div role="progressbar" aria-valuemin="0" aria-valuemax="100" class="v-progress-circular v-progress-circular--indeterminate" style="height: 24px; width: 24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="24 24 48 48" style="transform: rotate(0deg);">
+            <circle fill="transparent" cx="48" cy="48" r="20" stroke-width="8" stroke-dasharray="125.664" stroke-dashoffset="125.66370614359172px" class="v-progress-circular__overlay"></circle>
+          </svg>
+          <div class="v-progress-circular__info"></div>
+        </div>
+      </div>
+      <div class="v-list-item__content">
+        <div class="v-list-item__title">Band 0 - Song 0</div>
+      </div>
+    </div>
+    <div tabindex="0" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light">
+      <div class="v-list-item__icon"><i aria-hidden="true" class="v-icon notranslate mdi mdi-check-circle theme--light"></i></div>
+      <div class="v-list-item__content">
+        <div class="v-list-item__title">Band 1 - Song 1</div>
+      </div>
+    </div>
+    <div tabindex="0" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light">
+      <div class="v-list-item__icon"><i aria-hidden="true" class="v-icon notranslate mdi mdi-cloud-download theme--light"></i></div>
+      <div class="v-list-item__content">
+        <div class="v-list-item__title">Band 2 - Song 2</div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

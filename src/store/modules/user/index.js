@@ -1,17 +1,10 @@
 import { path, pathOr } from 'ramda';
+import utils from '@/utils';
 import api from '@/api/';
 import router from '@/router';
 import { AUTH_FORM_TYPE_MAP, STATUS_MAP, API_ERROR_MAP } from '@/const';
 
-const getErrorKey = response => pathOr([], ['data', 'errors'], response)
-  .map(({ message }) => message)
-  .join(', ');
-const createMessage = (error) => {
-  if (error.response) {
-    return `${error.response.statusText}: ${error}`;
-  }
-  return error.toString();
-};
+const getErrorKey = response => pathOr([], ['data', 'errors', 0, 'message'], response);
 
 export default {
   namespaced: true,
@@ -85,7 +78,7 @@ export default {
         if (path(['response', 'status'], error) === STATUS_MAP.UNAUTHORIZED && message) {
           commit('SET_AUTH_ERROR', message);
         } else {
-          commit('SET_AUTH_ERROR', createMessage(error));
+          commit('SET_AUTH_ERROR', utils.createMessage(error));
         }
         return;
       } finally {

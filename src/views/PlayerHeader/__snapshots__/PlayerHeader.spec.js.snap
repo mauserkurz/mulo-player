@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component PlayerHeader snapshots should match snapshot 1`] = `
+<div class="row player-header align-center justify-space-between"><a href="/player" title="Music lover"><img alt="App logo" src="@/assets/logo.svg" width="64" height="64"></a> <button type="button" class="v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default primary--text"><span class="v-btn__content">
+    Logout
+  </span></button></div>
+`;

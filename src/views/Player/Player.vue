@@ -82,14 +82,22 @@ export default {
     const reader = new FileReader();
     const link = document.createElement('a');
 
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       this.audio.element.src = event.target.result;
+
+      // TODO run file after file switch without loading
+      if (this.firstLoaded) {
+        await this.audio.switchPlaying(true);
+      } else {
+        this.firstLoaded = true;
+      }
     };
     link.target = '_blank';
 
     return {
       audio: createAudio({}),
       showVolume: false,
+      firstLoaded: false,
       reader,
       link,
     };
@@ -139,8 +147,6 @@ export default {
 @import '~@/style/variables.less';
 
 .player {
-  position: sticky;
-  bottom: 20px;
   display: inline-flex;
   border: 1px solid @player-border-color;
   border-radius: 5px;

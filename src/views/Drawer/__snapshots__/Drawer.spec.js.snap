@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component Drawer snapshots should match snapshot 1`] = `
+<aside class="drawer v-navigation-drawer v-navigation-drawer--fixed v-navigation-drawer--is-mobile v-navigation-drawer--open v-navigation-drawer--right v-navigation-drawer--temporary theme--light" style="height: 100%; top: 0px; transform: translateX(0%); width: 256px;">
+  <div class="v-navigation-drawer__content">
+    <div tabindex="-1" class="v-list-item theme--light">
+      <div class="v-list-item__content">
+        <div class="v-list-item__title title"><button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--small primary--text"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-close-circle-outline theme--light"></i></span></button>
+          Upload music
+        </div>
+      </div>
+    </div>
+    <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+    <div class="container">
+      <div class="row align-center justify-center">
+        <div class="col col-12"></div>
+      </div>
+    </div>
+  </div>
+  <div class="v-navigation-drawer__border"></div>
+</aside>
+`;

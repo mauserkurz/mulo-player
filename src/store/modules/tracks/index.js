@@ -1,3 +1,4 @@
+import utils from '@/utils';
 import api from '@/api/';
 import createTrack from '@/models/track/createTrack';
 
@@ -9,6 +10,8 @@ export default {
   state: {
     currentTrackID: null,
     trackList: [],
+    sendingFileError: '',
+    isFileSending: false,
   },
 
   getters: {
@@ -37,6 +40,18 @@ export default {
 
     SET_TRACK_LOADING_STATE(state, { trackID, isLoading }) {
       findTrack(state)(trackID).isLoading = isLoading;
+    },
+
+    ADD_TRACK_TO_LIST(state, { id, name, blob }) {
+      state.trackList.push(createTrack({ id, name, blob }));
+    },
+
+    SET_SENDING_FILE_ERROR(state, error) {
+      state.sendingFileError = error;
+    },
+
+    SET_IS_FILE_SENDING(state, mode) {
+      state.isFileSending = mode;
     },
   },
 
@@ -85,6 +100,26 @@ export default {
     async switchTrack({ commit, dispatch }, ID) {
       await dispatch('getTrack', ID);
       commit('SET_CURRENT_TRACK_ID', ID);
+    },
+
+    async sendFile({ rootState, commit }, file) {
+      const { userID } = rootState.user;
+      let response;
+
+      commit('SET_IS_FILE_SENDING', true);
+      try {
+        response = await api.sendTrack({ userID, file });
+      } catch (error) {
+        commit('SET_SENDING_FILE_ERROR', utils.createMessage(error));
+        return false;
+      } finally {
+        commit('SET_IS_FILE_SENDING', false);
+      }
+      const { id, name } = response.data.tracks[0];
+
+      commit('ADD_TRACK_TO_LIST', { id, name, blob: file });
+      commit('SET_SENDING_FILE_ERROR', '');
+      return true;
     },
   },
 };
