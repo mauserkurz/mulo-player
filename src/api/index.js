@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL as baseURL } from '@/const';
+import { API_URL as baseURL } from '@/constants';
 
 const API = axios.create({
   baseURL,
@@ -29,11 +29,12 @@ export default {
     return API.get(`user/${userID}/soundtracks`);
   },
 
-  async loadTrack({ userID, trackID }) {
+  async loadTrack({ userID, trackID, cancelToken }) {
     return API.get(`user/${userID}/soundtracks/${trackID}.mp3`, {
       responseType: 'blob',
       Accept: 'audio/mpeg',
       timeout: 60 * 1000,
+      cancelToken,
     });
   },
 

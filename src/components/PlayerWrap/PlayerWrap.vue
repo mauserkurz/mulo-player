@@ -7,7 +7,8 @@
         :track-list="trackList"
         :current-track="currentTrack"
         @switch-track="switchTrack"
-        @get-track="getTrack"/>
+        @get-track="getTrack"
+        @cancel-getting-track="cancelGettingTrack"/>
 
       <footer class="player-wrap__footer">
         <v-card-actions>
@@ -72,7 +73,7 @@ export default {
 
   methods: {
     ...mapActions('user', ['logout']),
-    ...mapActions('tracks', ['getTrack', 'getTrackList', 'switchTrack', 'sendFile']),
+    ...mapActions('tracks', ['getTrack', 'getTrackList', 'switchTrack', 'sendFile', 'cancelGettingTrack']),
 
     switchDrawer(state) {
       this.isDrawerShown = state;

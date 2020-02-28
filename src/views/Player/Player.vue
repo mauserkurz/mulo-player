@@ -85,7 +85,6 @@ export default {
     reader.onload = async (event) => {
       this.audio.element.src = event.target.result;
 
-      // TODO run file after file switch without loading
       if (this.firstLoaded) {
         await this.audio.switchPlaying(true);
       } else {

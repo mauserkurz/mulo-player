@@ -3,6 +3,22 @@
 exports[`Component TrackList snapshots should match snapshot 1`] = `
 <div role="list" class="v-list track-list v-sheet v-sheet--tile theme--light v-list--rounded">
   <div role="listbox" class="v-item-group theme--light v-list-item-group primary--text">
+    <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-inverted v-text-field--solo-flat v-text-field--enclosed">
+      <div class="v-input__control">
+        <div class="v-input__slot">
+          <div class="v-input__prepend-inner">
+            <div class="v-input__icon v-input__icon--prepend-inner"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">search</i></div>
+          </div>
+          <div class="v-text-field__slot"><label for="input-5" class="v-label theme--light" style="left: 0px; position: absolute;">Search</label><input id="input-5" type="text"></div>
+          <div class="v-input__append-inner">
+            <div class="v-input__icon v-input__icon--"><i role="button" tabindex="0" class="v-icon notranslate v-icon--link material-icons theme--light"></i></div>
+          </div>
+        </div>
+        <div class="v-text-field__details">
+          <div class="v-messages theme--light"><span name="message-transition" tag="div" class="v-messages__wrapper"></span></div>
+        </div>
+      </div>
+    </div>
     <div tabindex="0" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light v-list-item--active">
       <div class="v-list-item__icon">
         <div role="progressbar" aria-valuemin="0" aria-valuemax="100" class="v-progress-circular v-progress-circular--indeterminate" style="height: 24px; width: 24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="24 24 48 48" style="transform: rotate(0deg);">
@@ -16,13 +32,13 @@ exports[`Component TrackList snapshots should match snapshot 1`] = `
       </div>
     </div>
     <div tabindex="0" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light">
-      <div class="v-list-item__icon"><i aria-hidden="true" class="v-icon notranslate mdi mdi-check-circle theme--light"></i></div>
+      <div class="v-list-item__icon"><i role="button" tabindex="0" class="v-icon notranslate v-icon--link mdi mdi-check-circle theme--light"></i></div>
       <div class="v-list-item__content">
         <div class="v-list-item__title">Band 1 - Song 1</div>
       </div>
     </div>
     <div tabindex="0" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light">
-      <div class="v-list-item__icon"><i aria-hidden="true" class="v-icon notranslate mdi mdi-cloud-download theme--light"></i></div>
+      <div class="v-list-item__icon"><i role="button" tabindex="0" class="v-icon notranslate v-icon--link mdi mdi-cloud-download theme--light"></i></div>
       <div class="v-list-item__content">
         <div class="v-list-item__title">Band 2 - Song 2</div>
       </div>

@@ -1,4 +1,4 @@
-import { DEFAULT_VOLUME } from '@/const';
+import { DEFAULT_VOLUME } from '@/constants';
 
 class AudioAPI {
   #playing = false;

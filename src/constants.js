@@ -26,6 +26,7 @@ export const API_ERROR_MAP = {
     INCORRECT_PASSWORD_OR_LOGIN: 'Incorrect login or password, try to use another data',
     EXISTING_USER: 'User with such login and password already exists',
   },
+  CANCELED_BY_USER: 'CANCELED_BY_USER',
 };
 export const EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const PASSWORD_REGEXP = /^[\w\d]*$/;

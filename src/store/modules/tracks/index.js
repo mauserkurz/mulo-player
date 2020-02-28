@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { API_ERROR_MAP } from '@/constants';
 import utils from '@/utils';
 import api from '@/api/';
 import createTrack from '@/models/track/createTrack';
@@ -12,6 +14,7 @@ export default {
     trackList: [],
     sendingFileError: '',
     isFileSending: false,
+    loadTrackCancelSourceMap: {},
   },
 
   getters: {
@@ -21,6 +24,8 @@ export default {
       }
       return getters.track(state.currentTrackID);
     },
+
+    loadTrackCancelSourceMap: state => trackID => state.loadTrackCancelSourceMap[trackID],
 
     track: findTrack,
   },
@@ -53,6 +58,14 @@ export default {
     SET_IS_FILE_SENDING(state, mode) {
       state.isFileSending = mode;
     },
+
+    ADD_LOAD_TRACK_CANCEL_SOURCE(state, { trackID, source }) {
+      state.loadTrackCancelSourceMap[trackID] = source;
+    },
+
+    DELETE_LOAD_TRACK_CANCEL_SOURCE(state, trackID) {
+      delete state.loadTrackCancelSourceMap[trackID];
+    },
   },
 
   actions: {
@@ -79,6 +92,7 @@ export default {
 
     async getTrack({ rootState, getters, commit }, trackID) {
       const { userID } = rootState.user;
+      const source = axios.CancelToken.source();
 
       if (getters.track(trackID).blob) {
         return;
@@ -86,15 +100,26 @@ export default {
       let response = {};
 
       commit('SET_TRACK_LOADING_STATE', { trackID, isLoading: true });
+      commit('ADD_LOAD_TRACK_CANCEL_SOURCE', { trackID, source });
       try {
-        response = await api.loadTrack({ userID, trackID });
+        response = await api.loadTrack({ userID, trackID, cancelToken: source.token });
       } catch (error) {
-        window.console.error(error);
+        if (error.message !== API_ERROR_MAP.CANCELED_BY_USER) {
+          window.console.error(error);
+        }
         return;
       } finally {
+        commit('DELETE_LOAD_TRACK_CANCEL_SOURCE', trackID);
         commit('SET_TRACK_LOADING_STATE', { trackID, isLoading: false });
       }
       commit('SET_AUDIO_BLOB', { trackID, blob: response.data });
+    },
+
+    cancelGettingTrack({ getters, commit }, trackID) {
+      const source = getters.loadTrackCancelSourceMap(trackID);
+
+      source.cancel(API_ERROR_MAP.CANCELED_BY_USER);
+      commit('SET_TRACK_LOADING_STATE', { trackID, isLoading: false });
     },
 
     async switchTrack({ commit, dispatch }, ID) {

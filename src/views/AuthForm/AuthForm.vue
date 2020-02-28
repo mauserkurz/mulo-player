@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { AUTH_FORM_TYPE_MAP, EMAIL_REGEXP, PASSWORD_REGEXP } from '@/const';
+import { AUTH_FORM_TYPE_MAP, EMAIL_REGEXP, PASSWORD_REGEXP } from '@/constants';
 
 export default {
   name: 'AuthForm',

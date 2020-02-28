@@ -1,6 +1,7 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import clone from 'ramda/src/clone';
+import flushPromises from 'flush-promises';
 import api from '@/api/';
 import createTrack from '@/models/track/createTrack';
 import user from '../user';
@@ -193,7 +194,11 @@ describe('Module tracks', () => {
           api.loadTrack = spy;
           await store.dispatch('tracks/getTrack', trackID);
           api.loadTrack = handler;
-          expect(spy.mock.calls).toEqual([[{ userID, trackID }]]);
+          expect(spy.mock.calls).toEqual([[{
+            userID,
+            trackID,
+            cancelToken: { promise: new Promise(() => {}) },
+          }]]);
         });
 
         it('should save blob for track', async () => {
@@ -221,6 +226,110 @@ describe('Module tracks', () => {
           await store.dispatch('tracks/getTrack', trackID);
           api.loadTrack = handler;
           expect(store.state.tracks.trackList[1].blob).toEqual(blob);
+        });
+
+        it('should save cancelSource of request', async () => {
+          const tracksCopy = clone(tracks);
+          const userCopy = clone(user);
+          const userID = '12345';
+          const trackID = 5;
+          const trackList = [
+            { id: 0, name: 'Band 0 - Track 0' },
+            { id: 5, name: 'Band 5 - Track 5' },
+            { id: 4, name: 'Band 4 - Track 4' },
+            { id: 3, name: 'Band 3 - Track 3' },
+          ].map(createTrack);
+
+          userCopy.state.userID = userID;
+          tracksCopy.state.trackList = trackList;
+          const store = createStore({ tracks: tracksCopy, user: userCopy });
+          const handler = api.loadTrack;
+
+          api.loadTrack = jest.fn(() => Promise.resolve({
+            status: 200,
+            data: new Blob([], { type: 'audio/mpeg' }),
+          }));
+          store.dispatch('tracks/getTrack', trackID);
+
+          const sourceCount = Object.values(store.state.tracks.loadTrackCancelSourceMap).length;
+          await flushPromises();
+          api.loadTrack = handler;
+          expect(sourceCount).toBe(1);
+        });
+
+        it('should remove cancelSource after request', async () => {
+          const tracksCopy = clone(tracks);
+          const userCopy = clone(user);
+          const userID = '12345';
+          const trackID = 5;
+          const trackList = [
+            { id: 0, name: 'Band 0 - Track 0' },
+            { id: 5, name: 'Band 5 - Track 5' },
+            { id: 4, name: 'Band 4 - Track 4' },
+            { id: 3, name: 'Band 3 - Track 3' },
+          ].map(createTrack);
+
+          userCopy.state.userID = userID;
+          tracksCopy.state.trackList = trackList;
+          const store = createStore({ tracks: tracksCopy, user: userCopy });
+          const handler = api.loadTrack;
+
+          api.loadTrack = jest.fn(() => Promise.resolve({
+            status: 200,
+            data: new Blob([], { type: 'audio/mpeg' }),
+          }));
+          await store.dispatch('tracks/getTrack', trackID);
+          api.loadTrack = handler;
+          const sourceCount = Object.values(store.state.tracks.loadTrackCancelSourceMap).length;
+
+          expect(sourceCount).toBe(0);
+        });
+      });
+
+      describe('cancelGettingTrack action', () => {
+        it('should cancel request of getting track', async () => {
+          const tracksCopy = clone(tracks);
+          const trackID = 2;
+          const spy = jest.fn(() => {});
+
+          tracksCopy.state.trackList = [
+            { id: 0, name: 'Band 0 - Track 0' },
+            { id: 1, name: 'Band 1 - Track 1' },
+            { id: 2, name: 'Band 2 - Track 2' },
+            { id: 3, name: 'Band 3 - Track 3' },
+          ].map(createTrack);
+          tracksCopy.state.loadTrackCancelSourceMap = {
+            0: {},
+            1: {},
+            [trackID]: { cancel: spy },
+            3: {},
+          };
+          const store = createStore({ tracks: tracksCopy });
+
+          await store.dispatch('tracks/cancelGettingTrack', trackID);
+          expect(spy).toHaveBeenCalled();
+        });
+
+        it('should set isLoading: false for canceled track', async () => {
+          const tracksCopy = clone(tracks);
+          const trackID = 2;
+
+          tracksCopy.state.trackList = [
+            { id: 0, name: 'Band 0 - Track 0' },
+            { id: 1, name: 'Band 1 - Track 1' },
+            { id: 2, name: 'Band 2 - Track 2', isLoading: true },
+            { id: 3, name: 'Band 3 - Track 3' },
+          ].map(createTrack);
+          tracksCopy.state.loadTrackCancelSourceMap = {
+            0: {},
+            1: {},
+            [trackID]: { cancel() {} },
+            3: {},
+          };
+          const store = createStore({ tracks: tracksCopy });
+
+          await store.dispatch('tracks/cancelGettingTrack', trackID);
+          expect(store.state.tracks.trackList[2].isLoading).toBe(false);
         });
       });
 

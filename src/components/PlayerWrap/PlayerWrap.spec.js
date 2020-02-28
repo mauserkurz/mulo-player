@@ -99,5 +99,17 @@ describe('Component PlayerWrap', () => {
       await flushPromises();
       expect(wrapper.find('.drawer').vm.value).toBe(false);
     });
+
+    it('should call cancelGettingTrack action on cancel-getting-track event from TrackList', () => {
+      const trackID = 5;
+      const tracksCopy = clone(tracks);
+      const spy = jest.fn();
+
+      tracksCopy.actions.cancelGettingTrack = spy;
+      const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
+
+      wrapper.find('.track-list').vm.$emit('cancel-getting-track', trackID);
+      expect(spy).toHaveBeenCalled();
+    });
   });
 });

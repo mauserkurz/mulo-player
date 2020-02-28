@@ -2,7 +2,7 @@ import { path, pathOr } from 'ramda';
 import utils from '@/utils';
 import api from '@/api/';
 import router from '@/router';
-import { AUTH_FORM_TYPE_MAP, STATUS_MAP, API_ERROR_MAP } from '@/const';
+import { AUTH_FORM_TYPE_MAP, STATUS_MAP, API_ERROR_MAP } from '@/constants';
 
 const getErrorKey = response => pathOr([], ['data', 'errors', 0, 'message'], response);
 

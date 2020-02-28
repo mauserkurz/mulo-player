@@ -2,20 +2,32 @@
   <v-list
     class="track-list"
     rounded>
-    <v-list-item-group color="primary">
+    <v-list-item-group
+      color="primary">
+      <v-text-field
+        v-model="search"
+        prepend-inner-icon="search"
+        flat
+        solo-inverted
+        clearable
+        label="Search"
+        @click:clear="clearSearch"/>
+
       <v-list-item
-        v-for="track of trackList"
+        v-for="track of filteredTrackList"
         :key="track.id"
         :class="{ 'v-list-item--active': isTrackSelected(track.id) }"
         @click="switchTrack(track.id)">
-        <v-list-item-icon @click.stop="getTrack(track.id)">
+        <v-list-item-icon>
           <v-icon
             v-if="!track.isLoading"
-            v-text="getIcon(track.isLoaded)"/>
+            v-text="getIcon(track.isLoaded)"
+            @click.stop="getTrack(track.id)"/>
           <v-progress-circular
             v-else
             :size="24"
-            indeterminate/>
+            indeterminate
+            @click.stop="cancelGettingTrack(track.id)"/>
         </v-list-item-icon>
 
         <v-list-item-content>
@@ -42,6 +54,16 @@ export default {
     },
   },
 
+  data() {
+    return { search: '' };
+  },
+
+  computed: {
+    filteredTrackList() {
+      return this.trackList.filter(({ name }) => !this.search || name.includes(this.search));
+    },
+  },
+
   methods: {
     isTrackSelected(trackID) {
       return this.currentTrack.id === trackID;
@@ -62,6 +84,14 @@ export default {
 
     getTrack(trackID) {
       this.$emit('get-track', trackID);
+    },
+
+    cancelGettingTrack(trackID) {
+      this.$emit('cancel-getting-track', trackID);
+    },
+
+    clearSearch() {
+      this.search = '';
     },
   },
 };

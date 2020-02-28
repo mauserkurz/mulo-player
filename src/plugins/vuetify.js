@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import { THEME as theme } from '@/const';
+import { THEME as theme } from '@/constants';
 
 Vue.use(Vuetify);
 

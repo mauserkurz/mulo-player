@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { MAX_FILE_SIZE } from '@/const';
+import { MAX_FILE_SIZE } from '@/constants';
 
 export default {
   name: 'UploadForm',
