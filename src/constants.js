@@ -13,7 +13,7 @@ export const THEME = {
     },
   },
 };
-export const API_URL = utils.isProd() ? 'http://mulo-api.uxp.ru/' : '/api/';
+export const API_URL = utils.isProd() ? 'https://api-playermusiclover.herokuapp.com/' : '/api/';
 export const AUTH_FORM_TYPE_MAP = {
   SIGN_IN: 'sign-in',
   SIGN_UP: 'sign-up',
