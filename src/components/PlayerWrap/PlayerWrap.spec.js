@@ -15,6 +15,7 @@ localVue.use(Vuex);
 describe('Component PlayerWrap', () => {
   const createWrapper = ({ isWithoutStubs = false, modules = {}, ...options } = {}) => {
     const renderer = isWithoutStubs ? mount : shallowMount;
+    tracks.actions.getTrackList = () => Promise.resolve();
     const store = new Vuex.Store({
       namespaced: true,
 
@@ -50,6 +51,7 @@ describe('Component PlayerWrap', () => {
           name: 'Band 2 - Song 2',
         }),
       ];
+      tracksCopy.actions.getTrackList = () => Promise.resolve();
       const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
 
       expect(wrapper.html()).toMatchSnapshot();
@@ -81,6 +83,7 @@ describe('Component PlayerWrap', () => {
       const spy = jest.fn();
 
       tracksCopy.actions.clearError = spy;
+      tracksCopy.actions.getTrackList = () => Promise.resolve();
       const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
 
       wrapper.find('.upload-form').vm.$emit('clear-form');
@@ -93,6 +96,7 @@ describe('Component PlayerWrap', () => {
       const spy = jest.fn();
 
       tracksCopy.actions.sendFile = spy;
+      tracksCopy.actions.getTrackList = () => Promise.resolve();
       const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
 
       wrapper.find('.upload-form').vm.$emit('submit', file);
@@ -104,6 +108,7 @@ describe('Component PlayerWrap', () => {
       const tracksCopy = clone(tracks);
 
       tracksCopy.actions.sendFile = () => Promise.resolve(true);
+      tracksCopy.actions.getTrackList = () => Promise.resolve();
       const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
 
       wrapper.find('.upload-form').vm.$emit('submit', file);
@@ -117,6 +122,7 @@ describe('Component PlayerWrap', () => {
       const spy = jest.fn();
 
       tracksCopy.actions.cancelGettingTrack = spy;
+      tracksCopy.actions.getTrackList = () => Promise.resolve();
       const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
 
       wrapper.find('.track-list').vm.$emit('cancel-getting-track', trackID);
