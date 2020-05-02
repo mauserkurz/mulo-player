@@ -8,9 +8,11 @@ import vuetify from './plugins/vuetify';
 Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
-  if (to.fullPath === '/player' && !store.getters['user/isAuthorized']) {
+  const isAuthorized = store.getters['user/isAuthorized'];
+
+  if (to.fullPath.startsWith('/player') && !isAuthorized) {
     next('/');
-  } else if (to.fullPath === '/' && store.getters['user/isAuthorized']) {
+  } else if (to.fullPath === '/' && isAuthorized) {
     next('/player');
   } else if (to.name === null) {
     next('/');
