@@ -4,6 +4,7 @@ import { API_URL as baseURL } from '@/constants';
 const API = axios.create({
   baseURL,
   headers: { 'Content-Type': 'application/json' },
+  crossDomain: true,
   withCredentials: true,
   timeout: 2000,
 });
@@ -48,6 +49,7 @@ export default {
       data,
       {
         headers: { 'Content-Type': 'multipart/form-data' },
+        crossDomain: true,
         withCredentials: true,
       },
     );

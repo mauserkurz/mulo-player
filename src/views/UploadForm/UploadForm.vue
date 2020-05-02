@@ -55,6 +55,11 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    isHidden: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -70,6 +75,16 @@ export default {
   computed: {
     hasError() {
       return !!this.error;
+    },
+  },
+
+  watch: {
+    isHidden(value) {
+      if (value) {
+        this.file = null;
+        this.$refs.form.reset();
+        this.$emit('clear-form');
+      }
     },
   },
 

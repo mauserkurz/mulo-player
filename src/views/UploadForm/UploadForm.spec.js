@@ -60,6 +60,25 @@ describe('Component UploadForm', () => {
 
       expect(wrapper.find('v-btn-stub').vm.loading).toBe(true);
     });
+
+    describe('isHidden represent drawer showing change', () => {
+      it('should after change isHidden to true reset form', async () => {
+        const { wrapper } = createWrapper({ isWithoutStubs: true, propsData: { isHidden: false } });
+        const spy = jest.spyOn(wrapper.vm.$refs.form, 'reset');
+
+        wrapper.setProps({ isHidden: true });
+        await wrapper.vm.$nextTick();
+        expect(spy).toHaveBeenCalled();
+      });
+
+      it('should after change isHidden to true send event clear-form', async () => {
+        const { wrapper } = createWrapper({ isWithoutStubs: true, propsData: { isHidden: false } });
+
+        wrapper.setProps({ isHidden: true });
+        await wrapper.vm.$nextTick();
+        expect(wrapper.emitted()['clear-form']).toEqual([[]]);
+      });
+    });
   });
 
   describe('events', () => {

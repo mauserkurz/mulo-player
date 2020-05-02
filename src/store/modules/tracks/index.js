@@ -82,7 +82,17 @@ export default {
       const { tracks } = response.data;
 
       if (tracks.length > 0) {
-        commit('SET_TRACK_LIST', tracks.map(createTrack));
+        const createTrackFromResponse = ({ id, name, dateLoad }) => {
+          // TODO change backend format from '18.04.2020 08:35:18' to '2020.04.18 08:35:18'
+          const date = dateLoad
+            .split(' ')
+            .map(a => a.split('.').reverse().join('.'))
+            .join(' ');
+
+          return createTrack({ id, name, lastModifiedDate: Date.parse(date) });
+        };
+
+        commit('SET_TRACK_LIST', tracks.map(createTrackFromResponse));
         await dispatch('switchTrack', response.data.tracks[0].id);
       } else {
         commit('SET_TRACK_LIST', []);
@@ -127,7 +137,11 @@ export default {
       commit('SET_CURRENT_TRACK_ID', ID);
     },
 
-    async sendFile({ rootState, commit }, file) {
+    clearError({ commit }) {
+      commit('SET_SENDING_FILE_ERROR', '');
+    },
+
+    async sendFile({ rootState, commit, dispatch }, file) {
       const { userID } = rootState.user;
       let response;
 
@@ -143,7 +157,7 @@ export default {
       const { id, name } = response.data.tracks[0];
 
       commit('ADD_TRACK_TO_LIST', { id, name, blob: file });
-      commit('SET_SENDING_FILE_ERROR', '');
+      dispatch('clearError');
       return true;
     },
   },

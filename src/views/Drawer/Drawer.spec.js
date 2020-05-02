@@ -33,5 +33,15 @@ describe('Component Drawer', () => {
       wrapper.find('.v-btn').trigger('click');
       expect(wrapper.emitted().input).toEqual([[true], [false]]);
     });
+
+    it('should prevent emitting input event while stateless: true', () => {
+      const { wrapper } = createWrapper({
+        isWithoutStubs: true,
+        propsData: { stateless: true },
+      });
+
+      wrapper.find('.v-btn').trigger('click');
+      expect(wrapper.emitted().input).toEqual([[true]]);
+    });
   });
 });

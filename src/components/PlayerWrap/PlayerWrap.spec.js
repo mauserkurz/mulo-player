@@ -76,6 +76,17 @@ describe('Component PlayerWrap', () => {
       expect(wrapper.find('.drawer').vm.value).toBe(true);
     });
 
+    it('should call clearError action on clear-form event from UploadForm', () => {
+      const tracksCopy = clone(tracks);
+      const spy = jest.fn();
+
+      tracksCopy.actions.clearError = spy;
+      const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
+
+      wrapper.find('.upload-form').vm.$emit('clear-form');
+      expect(spy).toHaveBeenCalled();
+    });
+
     it('should call sendFile action on submit event from UploadForm', () => {
       const file = new File([], 'track', { type: 'audio/mpeg' });
       const tracksCopy = clone(tracks);

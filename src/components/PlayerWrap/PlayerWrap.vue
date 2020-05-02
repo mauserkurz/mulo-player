@@ -29,10 +29,14 @@
       </footer>
     </v-container>
 
-    <Drawer v-model="isDrawerShown">
+    <Drawer
+      v-model="isDrawerShown"
+      :stateless="isFileSending">
       <UploadForm
         :loading="isFileSending"
         :error="sendingFileError"
+        :is-hidden="!isDrawerShown"
+        @clear-form="clearError"
         @submit="onUploadFormSubmit"/>
     </Drawer>
   </v-sheet>
@@ -61,9 +65,7 @@ export default {
   },
 
   data() {
-    return {
-      isDrawerShown: false,
-    };
+    return { isDrawerShown: false };
   },
 
   computed: {
@@ -73,7 +75,14 @@ export default {
 
   methods: {
     ...mapActions('user', ['logout']),
-    ...mapActions('tracks', ['getTrack', 'getTrackList', 'switchTrack', 'sendFile', 'cancelGettingTrack']),
+    ...mapActions('tracks', [
+      'getTrack',
+      'getTrackList',
+      'switchTrack',
+      'sendFile',
+      'cancelGettingTrack',
+      'clearError',
+    ]),
 
     switchDrawer(state) {
       this.isDrawerShown = state;

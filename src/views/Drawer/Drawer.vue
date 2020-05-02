@@ -1,6 +1,7 @@
 <template>
   <v-navigation-drawer
     :value="value"
+    :stateless="stateless"
     class="drawer"
     right
     fixed
@@ -10,6 +11,7 @@
       <v-list-item-content>
         <v-list-item-title class="title">
           <v-btn
+            :disabled="stateless"
             color="primary"
             small
             icon
@@ -41,6 +43,11 @@ export default {
     value: {
       type: Boolean,
       required: true,
+    },
+
+    stateless: {
+      type: Boolean,
+      default: false,
     },
   },
 

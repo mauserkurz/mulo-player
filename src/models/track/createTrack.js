@@ -5,11 +5,13 @@ class Track {
     id = '',
     name = '',
     blob = DEFAULT_BLOB,
+    lastModifiedDate = new Date().getTime(),
     isLoading = false,
   }) {
     this.id = id;
     this.name = name;
     this.blob = blob;
+    this.lastModifiedDate = lastModifiedDate;
     this.isLoading = isLoading;
   }
 
