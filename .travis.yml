@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+- 13.8.0
+install:
+- npm install
+cache:
+  directories:
+  - node_modules
+jobs:
+  include:
+  - stage: lint
+    script:
+    - npm run lint
+  - stage: test
+    script:
+    - npm run test:unit
+  - stage: deploy
+    script:
+    - npm run build
+    deploy:
+      provider: heroku
+      api_key: 3307f2c3-34aa-4abe-ba9c-96af3d4d6ab3
+      app: music-lover-player
+      on:
+        all_branches: 'true'
+      skip_cleanup: 'true'

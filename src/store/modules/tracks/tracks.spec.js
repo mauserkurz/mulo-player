@@ -80,30 +80,31 @@ describe('Module tracks', () => {
         it('should safe data.tracks as formatted trackList', async () => {
           const tracksCopy = clone(tracks);
           const userCopy = clone(user);
+          const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
           const trackList = [
             {
               id: 0,
               name: 'Band 0 - Track 0',
               dateLoad: '18.04.2020 08:20:10',
-              lastModifiedDate: 1587169210000,
+              lastModifiedDate: 1587198010000 + timezoneOffset,
             },
             {
               id: 1,
               name: 'Band 1 - Track 1',
               dateLoad: '19.04.2020 09:20:10',
-              lastModifiedDate: 1587259210000,
+              lastModifiedDate: 1587288010000 + timezoneOffset,
             },
             {
               id: 2,
               name: 'Band 2 - Track 2',
               dateLoad: '20.04.2020 07:20:10',
-              lastModifiedDate: 1587338410000,
+              lastModifiedDate: 1587367210000 + timezoneOffset,
             },
             {
               id: 3,
               name: 'Band 3 - Track 3',
               dateLoad: '21.04.2020 10:20:10',
-              lastModifiedDate: 1587435610000,
+              lastModifiedDate: 1587464410000 + timezoneOffset,
             },
           ];
 
