@@ -5,9 +5,10 @@
 
       <TrackList
         :track-list="trackList"
-        :current-track="currentTrack"
+        :current-track-i-d="currentTrackID"
         @switch-track="switchTrack"
         @get-track="getTrack"
+        @update-track-list="updateTrackList"
         @cancel-getting-track="cancelGettingTrack"/>
 
       <footer class="player-wrap__footer">
@@ -69,7 +70,7 @@ export default {
   },
 
   computed: {
-    ...mapState('tracks', ['trackList', 'sendingFileError', 'isFileSending']),
+    ...mapState('tracks', ['trackList', 'sendingFileError', 'isFileSending', 'currentTrackID']),
     ...mapGetters('tracks', ['currentTrack']),
   },
 
@@ -78,6 +79,7 @@ export default {
     ...mapActions('tracks', [
       'getTrack',
       'getTrackList',
+      'updateTrackList',
       'switchTrack',
       'sendFile',
       'cancelGettingTrack',

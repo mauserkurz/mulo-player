@@ -1,6 +1,11 @@
 import { mount, shallowMount, createLocalVue } from '@vue/test-utils';
+import draggable from 'vuedraggable';
 import createTrack from '@/models/track/createTrack';
 import vuetify from '@/plugins/vuetify';
+import { FILTER_TRACK_TYPE_KEYS, SORT_TRACK_TYPE_KEYS } from '@/constants';
+import TrackListSetting from '@/views/TrackListSetting/TrackListSetting.vue';
+import TrackListSearch from '@/views/TrackListSearch/TrackListSearch.vue';
+import TrackListItem from '@/views/TrackListItem/TrackListItem.vue';
 import TrackList from './TrackList.vue';
 
 const localVue = createLocalVue();
@@ -11,20 +16,28 @@ describe('Component TrackList', () => {
       id: 0,
       name: 'Band 0 - Song 0',
       isLoading: true,
+      lastModifiedDate: new Date('2020-04-08').getTime(),
     }),
     createTrack({
       id: 1,
       name: 'Band 1 - Song 1',
       blob: new Blob([], { type: 'audio/mpeg' }),
+      lastModifiedDate: new Date('2020-04-10').getTime(),
     }),
     createTrack({
       id: 2,
       name: 'Band 2 - Song 2',
+      lastModifiedDate: new Date('2020-04-11').getTime(),
+    }),
+    createTrack({
+      id: 3,
+      name: 'Band 3 - Song 3',
+      lastModifiedDate: new Date('2020-04-09').getTime(),
     }),
   ];
   const defaultProps = {
     trackList,
-    currentTrack: trackList[0],
+    currentTrackID: trackList[0].id,
   };
   const createWrapper = ({ isWithoutStubs = false, propsData = {}, ...options } = {}) => {
     const renderer = isWithoutStubs ? mount : shallowMount;
@@ -40,63 +53,121 @@ describe('Component TrackList', () => {
 
   describe('snapshots', () => {
     it('should match snapshot', () => {
-      const { wrapper } = createWrapper({ isWithoutStubs: true });
+      const { wrapper } = createWrapper();
 
       expect(wrapper.html()).toMatchSnapshot();
     });
   });
 
   describe('events', () => {
-    it('should emit switch-track event after click on list item', () => {
-      const { wrapper } = createWrapper({ isWithoutStubs: true });
+    describe('sort tracks after select sorting type', () => {
+      it('should show alphanumeric ascending track list', () => {
+        const { wrapper } = createWrapper({ stubs: { TrackListSetting } });
+        const payload = SORT_TRACK_TYPE_KEYS.ABC;
 
-      wrapper.findAll('.v-list-item').at(1).trigger('click');
-      expect(wrapper.emitted()['switch-track']).toEqual([[1]]);
-    });
-
-    it('should emit get-track event after click on download icon', () => {
-      const { wrapper } = createWrapper({
-        stubs: {
-          'v-icon': {
-            template: '<div class="v-icon" @click="$listeners.click" />',
-          },
-        },
+        wrapper.find(TrackListSetting).vm.$emit('input-sort-type', payload);
+        expect(wrapper.vm.filteredTrackList).toEqual(trackList);
       });
 
-      wrapper.findAll('.v-icon').at(0).trigger('click');
-      expect(wrapper.emitted()['get-track']).toEqual([[1]]);
+      it('should show alphanumeric descending track list', () => {
+        const { wrapper } = createWrapper({ stubs: { TrackListSetting } });
+        const payload = SORT_TRACK_TYPE_KEYS.CBA;
+
+        wrapper.find(TrackListSetting).vm.$emit('input-sort-type', payload);
+        expect(wrapper.vm.filteredTrackList).toEqual(trackList.slice().reverse());
+      });
+
+      it('should show new tracks at first', () => {
+        const { wrapper } = createWrapper({ stubs: { TrackListSetting } });
+        const payload = SORT_TRACK_TYPE_KEYS.NEW;
+        const sortedList = [trackList[2], trackList[1], trackList[3], trackList[0]];
+
+        wrapper.find(TrackListSetting).vm.$emit('input-sort-type', payload);
+        expect(wrapper.vm.filteredTrackList).toEqual(sortedList);
+      });
+
+      it('should show old tracks at first', () => {
+        const { wrapper } = createWrapper({ stubs: { TrackListSetting } });
+        const payload = SORT_TRACK_TYPE_KEYS.OLD;
+        const sortedList = [trackList[0], trackList[3], trackList[1], trackList[2]];
+
+        wrapper.find(TrackListSetting).vm.$emit('input-sort-type', payload);
+        expect(wrapper.vm.filteredTrackList).toEqual(sortedList);
+      });
+
+      it('should show custom sorted list', async () => {
+        const { wrapper } = createWrapper({ stubs: { TrackListSetting, draggable } });
+        const payload = SORT_TRACK_TYPE_KEYS.CUSTOM;
+        const sortedList = [trackList[0], trackList[2], trackList[1], trackList[3]];
+
+        wrapper.find(TrackListSetting).vm.$emit('input-sort-type', payload);
+        wrapper.find(draggable).vm.$emit('input', sortedList);
+        expect(wrapper.emitted()['update-track-list']).toEqual([[sortedList]]);
+      });
     });
 
-    it('should emit cancel-getting-track event after click on spinner icon', () => {
-      const { wrapper } = createWrapper({ isWithoutStubs: true });
+    describe('filter tracks after select filtering type and search input', () => {
+      it('should show filtered by substring track list', async () => {
+        const { wrapper } = createWrapper({ stubs: { TrackListSearch } });
+        const searchString = 'Band 0';
 
-      wrapper.find('.v-progress-circular').trigger('click');
-      expect(wrapper.emitted()['cancel-getting-track']).toEqual([[0]]);
+        wrapper.find(TrackListSearch).vm.$emit('input', searchString);
+        expect(wrapper.vm.filteredTrackList).toEqual([trackList[0]]);
+      });
+
+      it('should show tracks newer then date in search', async () => {
+        const { wrapper } = createWrapper({ stubs: { TrackListSearch, TrackListSetting } });
+        const payload = FILTER_TRACK_TYPE_KEYS.NEW;
+        const searchString = '2020-04-09';
+
+        wrapper.find(TrackListSetting).vm.$emit('input-filter-type', payload);
+        wrapper.find(TrackListSearch).vm.$emit('input', searchString);
+        expect(wrapper.vm.filteredTrackList).toEqual([trackList[1], trackList[2]]);
+      });
+
+      it('should show tracks older then date in search', async () => {
+        const { wrapper } = createWrapper({ stubs: { TrackListSearch, TrackListSetting } });
+        const payload = FILTER_TRACK_TYPE_KEYS.OLD;
+        const searchString = '2020-04-10';
+
+        wrapper.find(TrackListSetting).vm.$emit('input-filter-type', payload);
+        wrapper.find(TrackListSearch).vm.$emit('input', searchString);
+        expect(wrapper.vm.filteredTrackList).toEqual([trackList[0], trackList[3]]);
+      });
+
+      it('should show tracks with same date in search', async () => {
+        const { wrapper } = createWrapper({ stubs: { TrackListSearch, TrackListSetting } });
+        const payload = FILTER_TRACK_TYPE_KEYS.DURING;
+        const searchString = '2020-04-11';
+
+        wrapper.find(TrackListSetting).vm.$emit('input-filter-type', payload);
+        wrapper.find(TrackListSearch).vm.$emit('input', searchString);
+        expect(wrapper.vm.filteredTrackList).toEqual([trackList[2]]);
+      });
     });
 
-    it('should show filtered list after search input', async () => {
-      const { wrapper } = createWrapper({ isWithoutStubs: true });
-      const input = wrapper.find('input[type="text"]');
+    it('should emit switch-track event after switch-track event from TrackListItem', () => {
+      const { wrapper } = createWrapper({ stubs: { TrackListItem } });
+      const payload = '1';
 
-      input.element.value = 'Band 1';
-      input.trigger('input');
-      await wrapper.vm.$nextTick();
-
-      expect(wrapper.findAll('.v-list-item__title').length).toBe(1);
-      expect(wrapper.find('.v-list-item__title').text()).toBe(trackList[1].name);
+      wrapper.find(TrackListItem).vm.$emit('switch-track', payload);
+      expect(wrapper.emitted()['switch-track']).toEqual([[payload]]);
     });
 
-    it('should clear search input after click on clear icon', async () => {
-      const { wrapper } = createWrapper({ isWithoutStubs: true });
-      const input = wrapper.find('input[type="text"]');
+    it('should emit get-track event after get-track event from TrackListItem', () => {
+      const { wrapper } = createWrapper({ stubs: { TrackListItem } });
+      const payload = '1';
 
-      input.element.value = 'Band 1';
-      input.trigger('input');
-      await wrapper.vm.$nextTick();
-      wrapper.find('.v-input').vm.$emit('click:clear');
-      await wrapper.vm.$nextTick();
+      wrapper.find(TrackListItem).vm.$emit('get-track', payload);
+      expect(wrapper.emitted()['get-track']).toEqual([[payload]]);
+    });
 
-      expect(input.element.value).toBe('');
+    it('should emit cancel-getting-track event after cancel-getting-track event from TrackListItem', () => {
+      const { wrapper } = createWrapper({ stubs: { TrackListItem } });
+      const payload = '1';
+
+      wrapper.find(TrackListItem).vm.$emit('cancel-getting-track', payload);
+      expect(wrapper.emitted()['cancel-getting-track']).toEqual([[payload]]);
     });
   });
 });

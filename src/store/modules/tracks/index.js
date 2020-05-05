@@ -10,7 +10,7 @@ export default {
   namespaced: true,
 
   state: {
-    currentTrackID: null,
+    currentTrackID: '',
     trackList: [],
     sendingFileError: '',
     isFileSending: false,
@@ -19,7 +19,7 @@ export default {
 
   getters: {
     currentTrack(state, getters) {
-      if (state.currentTrackID === null) {
+      if (state.currentTrackID === '') {
         return {};
       }
       return getters.track(state.currentTrackID);
@@ -83,21 +83,23 @@ export default {
 
       if (tracks.length > 0) {
         const createTrackFromResponse = ({ id, name, dateLoad }) => {
-          // TODO change backend format from '18.04.2020 08:35:18' to '2020.04.18 08:35:18'
-          const date = dateLoad
-            .split(' ')
-            .map(a => a.split('.').reverse().join('.'))
-            .join(' ');
+          const date = new Date(dateLoad);
+          const lastModifiedDate = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
 
-          return createTrack({ id, name, lastModifiedDate: Date.parse(date) });
+          return createTrack({ id, name, lastModifiedDate });
         };
+        const trackList = tracks.map(createTrackFromResponse);
 
-        commit('SET_TRACK_LIST', tracks.map(createTrackFromResponse));
-        await dispatch('switchTrack', response.data.tracks[0].id);
+        commit('SET_TRACK_LIST', trackList);
+        await dispatch('switchTrack', trackList[0].id);
       } else {
         commit('SET_TRACK_LIST', []);
         commit('SET_CURRENT_TRACK_ID', null);
       }
+    },
+
+    updateTrackList({ commit }, list) {
+      commit('SET_TRACK_LIST', list);
     },
 
     async getTrack({ rootState, getters, commit }, trackID) {

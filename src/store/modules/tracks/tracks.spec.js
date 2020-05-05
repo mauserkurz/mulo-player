@@ -21,7 +21,7 @@ describe('Module tracks', () => {
       const tracksCopy = clone(tracks);
       const currentTrack = createTrack({ id: 1 });
 
-      tracksCopy.state.currentTrackID = 1;
+      tracksCopy.state.currentTrackID = '1';
       tracksCopy.state.trackList = [
         createTrack({ id: 0 }),
         currentTrack,
@@ -41,10 +41,10 @@ describe('Module tracks', () => {
 
     it('currentTrack should get currentTrack data from list', () => {
       const tracksCopy = clone(tracks);
-      const trackID = 2;
+      const trackID = '2';
       const track = createTrack({ id: trackID });
 
-      tracksCopy.state.currentTrackID = 1;
+      tracksCopy.state.currentTrackID = '1';
       tracksCopy.state.trackList = [
         createTrack({ id: 0 }),
         createTrack({ id: 1 }),
@@ -80,31 +80,30 @@ describe('Module tracks', () => {
         it('should safe data.tracks as formatted trackList', async () => {
           const tracksCopy = clone(tracks);
           const userCopy = clone(user);
-          const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
           const trackList = [
             {
               id: 0,
               name: 'Band 0 - Track 0',
-              dateLoad: '18.04.2020 08:20:10',
-              lastModifiedDate: 1587198010000 + timezoneOffset,
+              dateLoad: '2020-04-18T08:20:10.0000000',
+              lastModifiedDate: 1587140410000,
             },
             {
               id: 1,
               name: 'Band 1 - Track 1',
-              dateLoad: '19.04.2020 09:20:10',
-              lastModifiedDate: 1587288010000 + timezoneOffset,
+              dateLoad: '2020-04-19T09:20:10.0000000',
+              lastModifiedDate: 1587230410000,
             },
             {
               id: 2,
               name: 'Band 2 - Track 2',
-              dateLoad: '20.04.2020 07:20:10',
-              lastModifiedDate: 1587367210000 + timezoneOffset,
+              dateLoad: '2020-04-20T07:20:10.0000000',
+              lastModifiedDate: 1587309610000,
             },
             {
               id: 3,
               name: 'Band 3 - Track 3',
-              dateLoad: '21.04.2020 10:20:10',
-              lastModifiedDate: 1587464410000 + timezoneOffset,
+              dateLoad: '2020-04-21T10:20:10.0000000',
+              lastModifiedDate: 1587406810000,
             },
           ];
 
@@ -126,10 +125,10 @@ describe('Module tracks', () => {
           const tracksCopy = clone(tracks);
           const userCopy = clone(user);
           const trackList = [
-            { id: 0, name: 'Band 0 - Track 0', dateLoad: '18.04.2020 08:20:10' },
-            { id: 1, name: 'Band 1 - Track 1', dateLoad: '19.04.2020 09:20:10' },
-            { id: 2, name: 'Band 2 - Track 2', dateLoad: '20.04.2020 07:20:10' },
-            { id: 3, name: 'Band 3 - Track 3', dateLoad: '21.04.2020 10:20:10' },
+            { id: '0', name: 'Band 0 - Track 0', dateLoad: '2020-04-18T08:20:10.0000000' },
+            { id: '1', name: 'Band 1 - Track 1', dateLoad: '2020-04-19T09:20:10.0000000' },
+            { id: '2', name: 'Band 2 - Track 2', dateLoad: '2020-04-20T07:20:10.0000000' },
+            { id: '3', name: 'Band 3 - Track 3', dateLoad: '2020-04-21T10:20:10.0000000' },
           ];
           const spy = jest.fn();
 
@@ -152,10 +151,10 @@ describe('Module tracks', () => {
           const userCopy = clone(user);
 
           tracksCopy.state.trackList = [
-            { id: 0, name: 'Band 0 - Track 0' },
-            { id: 1, name: 'Band 1 - Track 1' },
-            { id: 2, name: 'Band 2 - Track 2' },
-            { id: 3, name: 'Band 3 - Track 3' },
+            { id: '0', name: 'Band 0 - Track 0' },
+            { id: '1', name: 'Band 1 - Track 1' },
+            { id: '2', name: 'Band 2 - Track 2' },
+            { id: '3', name: 'Band 3 - Track 3' },
           ];
           userCopy.state.userID = '01234';
           const store = createStore({ tracks: tracksCopy, user: userCopy });
@@ -189,18 +188,40 @@ describe('Module tracks', () => {
         });
       });
 
+      it('updateTrackList action should rewrite track list', () => {
+        const tracksCopy = clone(tracks);
+        const userCopy = clone(user);
+        const trackList = [
+          { id: '0', name: 'Band 0 - Track 0' },
+          { id: '1', name: 'Band 1 - Track 1' },
+          { id: '2', name: 'Band 2 - Track 2' },
+          { id: '3', name: 'Band 3 - Track 3' },
+        ];
+
+        tracksCopy.state.trackList = [
+          { id: '3', name: 'Band 3 - Track 3' },
+          { id: '2', name: 'Band 2 - Track 2' },
+          { id: '1', name: 'Band 1 - Track 1' },
+          { id: '0', name: 'Band 0 - Track 0' },
+        ];
+        const store = createStore({ tracks: tracksCopy, user: userCopy });
+
+        store.dispatch('tracks/updateTrackList', trackList);
+        expect(store.state.tracks.trackList).toEqual(trackList);
+      });
+
       describe('getTrack action', () => {
         it('should call API.loadTrack', async () => {
           const tracksCopy = clone(tracks);
           const userCopy = clone(user);
           const userID = '12345';
-          const trackID = 5;
+          const trackID = '5';
           const blob = new Blob([], { type: 'audio/mpeg' });
           const trackList = [
-            { id: 0, name: 'Band 0 - Track 0' },
-            { id: 5, name: 'Band 5 - Track 5' },
-            { id: 4, name: 'Band 4 - Track 4' },
-            { id: 3, name: 'Band 3 - Track 3' },
+            { id: '0', name: 'Band 0 - Track 0' },
+            { id: '5', name: 'Band 5 - Track 5' },
+            { id: '4', name: 'Band 4 - Track 4' },
+            { id: '3', name: 'Band 3 - Track 3' },
           ].map(createTrack);
 
           userCopy.state.userID = userID;
@@ -226,13 +247,13 @@ describe('Module tracks', () => {
           const tracksCopy = clone(tracks);
           const userCopy = clone(user);
           const userID = '12345';
-          const trackID = 5;
+          const trackID = '5';
           const blob = new Blob([], { type: 'audio/mpeg' });
           const trackList = [
-            { id: 0, name: 'Band 0 - Track 0' },
-            { id: 5, name: 'Band 5 - Track 5' },
-            { id: 4, name: 'Band 4 - Track 4' },
-            { id: 3, name: 'Band 3 - Track 3' },
+            { id: '0', name: 'Band 0 - Track 0' },
+            { id: '5', name: 'Band 5 - Track 5' },
+            { id: '4', name: 'Band 4 - Track 4' },
+            { id: '3', name: 'Band 3 - Track 3' },
           ].map(createTrack);
 
           userCopy.state.userID = userID;
@@ -253,12 +274,12 @@ describe('Module tracks', () => {
           const tracksCopy = clone(tracks);
           const userCopy = clone(user);
           const userID = '12345';
-          const trackID = 5;
+          const trackID = '5';
           const trackList = [
-            { id: 0, name: 'Band 0 - Track 0' },
-            { id: 5, name: 'Band 5 - Track 5' },
-            { id: 4, name: 'Band 4 - Track 4' },
-            { id: 3, name: 'Band 3 - Track 3' },
+            { id: '0', name: 'Band 0 - Track 0' },
+            { id: '5', name: 'Band 5 - Track 5' },
+            { id: '4', name: 'Band 4 - Track 4' },
+            { id: '3', name: 'Band 3 - Track 3' },
           ].map(createTrack);
 
           userCopy.state.userID = userID;
@@ -282,12 +303,12 @@ describe('Module tracks', () => {
           const tracksCopy = clone(tracks);
           const userCopy = clone(user);
           const userID = '12345';
-          const trackID = 5;
+          const trackID = '5';
           const trackList = [
-            { id: 0, name: 'Band 0 - Track 0' },
-            { id: 5, name: 'Band 5 - Track 5' },
-            { id: 4, name: 'Band 4 - Track 4' },
-            { id: 3, name: 'Band 3 - Track 3' },
+            { id: '0', name: 'Band 0 - Track 0' },
+            { id: '5', name: 'Band 5 - Track 5' },
+            { id: '4', name: 'Band 4 - Track 4' },
+            { id: '3', name: 'Band 3 - Track 3' },
           ].map(createTrack);
 
           userCopy.state.userID = userID;
@@ -310,14 +331,14 @@ describe('Module tracks', () => {
       describe('cancelGettingTrack action', () => {
         it('should cancel request of getting track', async () => {
           const tracksCopy = clone(tracks);
-          const trackID = 2;
+          const trackID = '2';
           const spy = jest.fn(() => {});
 
           tracksCopy.state.trackList = [
-            { id: 0, name: 'Band 0 - Track 0' },
-            { id: 1, name: 'Band 1 - Track 1' },
-            { id: 2, name: 'Band 2 - Track 2' },
-            { id: 3, name: 'Band 3 - Track 3' },
+            { id: '0', name: 'Band 0 - Track 0' },
+            { id: '1', name: 'Band 1 - Track 1' },
+            { id: '2', name: 'Band 2 - Track 2' },
+            { id: '3', name: 'Band 3 - Track 3' },
           ].map(createTrack);
           tracksCopy.state.loadTrackCancelSourceMap = {
             0: {},
@@ -333,13 +354,13 @@ describe('Module tracks', () => {
 
         it('should set isLoading: false for canceled track', async () => {
           const tracksCopy = clone(tracks);
-          const trackID = 2;
+          const trackID = '2';
 
           tracksCopy.state.trackList = [
-            { id: 0, name: 'Band 0 - Track 0' },
-            { id: 1, name: 'Band 1 - Track 1' },
-            { id: 2, name: 'Band 2 - Track 2', isLoading: true },
-            { id: 3, name: 'Band 3 - Track 3' },
+            { id: '0', name: 'Band 0 - Track 0' },
+            { id: '1', name: 'Band 1 - Track 1' },
+            { id: '2', name: 'Band 2 - Track 2', isLoading: true },
+            { id: '3', name: 'Band 3 - Track 3' },
           ].map(createTrack);
           tracksCopy.state.loadTrackCancelSourceMap = {
             0: {},

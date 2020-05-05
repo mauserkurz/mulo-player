@@ -128,5 +128,18 @@ describe('Component PlayerWrap', () => {
       wrapper.find('.track-list').vm.$emit('cancel-getting-track', trackID);
       expect(spy).toHaveBeenCalled();
     });
+
+    it('should call updateTrackList action on update-track-list event from TrackList', () => {
+      const tracksCopy = clone(tracks);
+      const spy = jest.fn();
+      const trackList = [];
+
+      tracksCopy.actions.updateTrackList = spy;
+      tracksCopy.actions.getTrackList = () => Promise.resolve();
+      const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
+
+      wrapper.find('.track-list').vm.$emit('update-track-list', trackList);
+      expect(spy.mock.calls[0][1]).toEqual(trackList);
+    });
   });
 });

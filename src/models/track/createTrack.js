@@ -1,23 +1,19 @@
 const DEFAULT_BLOB = null;
 
-class Track {
-  constructor({
-    id = '',
-    name = '',
-    blob = DEFAULT_BLOB,
-    lastModifiedDate = new Date().getTime(),
-    isLoading = false,
-  }) {
-    this.id = id;
-    this.name = name;
-    this.blob = blob;
-    this.lastModifiedDate = lastModifiedDate;
-    this.isLoading = isLoading;
-  }
+export default ({
+  id = '',
+  name = '',
+  blob = DEFAULT_BLOB,
+  lastModifiedDate = new Date().getTime(),
+  isLoading = false,
+}) => ({
+  id: `${id}`,
+  name,
+  blob,
+  lastModifiedDate,
+  isLoading,
 
   get isLoaded() {
     return this.blob !== DEFAULT_BLOB;
-  }
-}
-
-export default options => new Track(options);
+  },
+});
