@@ -4,6 +4,7 @@
       <PlayerHeader @logout="logout"/>
 
       <TrackList
+        v-if="isTrackListNotEmpty"
         :track-list="trackList"
         :current-track-i-d="currentTrackID"
         @switch-track="switchTrack"
@@ -25,6 +26,7 @@
         </v-card-actions>
 
         <Player
+          v-if="currentTrack"
           :file="currentTrack.blob"
           :file-name="currentTrack.name"/>
       </footer>
@@ -72,6 +74,10 @@ export default {
   computed: {
     ...mapState('tracks', ['trackList', 'sendingFileError', 'isFileSending', 'currentTrackID']),
     ...mapGetters('tracks', ['currentTrack']),
+
+    isTrackListNotEmpty() {
+      return this.currentTrackID !== '';
+    },
   },
 
   methods: {

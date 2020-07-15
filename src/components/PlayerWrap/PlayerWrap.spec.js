@@ -121,6 +121,7 @@ describe('Component PlayerWrap', () => {
       const tracksCopy = clone(tracks);
       const spy = jest.fn();
 
+      tracksCopy.state.currentTrackID = 0;
       tracksCopy.actions.cancelGettingTrack = spy;
       tracksCopy.actions.getTrackList = () => Promise.resolve();
       const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });
@@ -134,6 +135,7 @@ describe('Component PlayerWrap', () => {
       const spy = jest.fn();
       const trackList = [];
 
+      tracksCopy.state.currentTrackID = 0;
       tracksCopy.actions.updateTrackList = spy;
       tracksCopy.actions.getTrackList = () => Promise.resolve();
       const { wrapper } = createWrapper({ modules: { tracks: tracksCopy }, isWithoutStubs: true });

@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       search: '',
-      sortType: SORT_TRACK_TYPE_KEYS.ABC,
+      sortType: SORT_TRACK_TYPE_KEYS.CUSTOM,
       filterType: FILTER_TRACK_TYPE_KEYS.TEXT,
 
       sorterCallBackMap: {

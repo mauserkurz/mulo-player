@@ -3,9 +3,9 @@
 exports[`Component TrackList snapshots should match snapshot 1`] = `
 <v-list-stub tag="div" tile="true" rounded="true" class="track-list">
   <v-list-item-group-stub activeclass="v-item--active" color="primary">
-    <tracklistsetting-stub sorttype="abc" filtertype="text"></tracklistsetting-stub>
+    <tracklistsetting-stub sorttype="custom" filtertype="text"></tracklistsetting-stub>
     <tracklistsearch-stub value="" filtertype="text"></tracklistsearch-stub>
-    <draggable-stub value="[object Object],[object Object],[object Object],[object Object]" clone="function(t){return t}" element="div" draggable=""><span name="slide-y-transition"><tracklistitem-stub track="[object Object]" currenttrackid="0"></tracklistitem-stub><tracklistitem-stub track="[object Object]" currenttrackid="0"></tracklistitem-stub><tracklistitem-stub track="[object Object]" currenttrackid="0"></tracklistitem-stub><tracklistitem-stub track="[object Object]" currenttrackid="0"></tracklistitem-stub></span></draggable-stub>
+    <draggable-stub value="[object Object],[object Object],[object Object],[object Object]" clone="function(t){return t}" element="div" draggable=".v-list-item"><span name="slide-y-transition"><tracklistitem-stub track="[object Object]" currenttrackid="0"></tracklistitem-stub><tracklistitem-stub track="[object Object]" currenttrackid="0"></tracklistitem-stub><tracklistitem-stub track="[object Object]" currenttrackid="0"></tracklistitem-stub><tracklistitem-stub track="[object Object]" currenttrackid="0"></tracklistitem-stub></span></draggable-stub>
   </v-list-item-group-stub>
 </v-list-stub>
 `;
