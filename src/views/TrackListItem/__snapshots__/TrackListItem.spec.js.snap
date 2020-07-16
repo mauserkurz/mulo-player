@@ -2,7 +2,7 @@
 
 exports[`Component TrackListItem snapshots should match snapshot 1`] = `
 <div tabindex="0" transition="slide-y-transition" class="v-list-item v-list-item--link theme--light track-list-item">
-  <div class="v-list-item__icon"><i role="button" tabindex="0" class="v-icon notranslate v-icon--link mdi mdi-cloud-download theme--light"></i></div>
+  <div class="v-list-item__icon"><button type="button" class="v-icon notranslate v-icon--link mdi mdi-cloud-download theme--light"></button></div>
   <div class="v-list-item__content">
     <div class="v-list-item__title">Band 0 - Song 0</div>
   </div>

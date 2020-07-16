@@ -6,7 +6,76 @@ exports[`Component PlayerWrap snapshots should match snapshot 1`] = `
     <div class="row player-header align-center justify-space-between"><a href="/player" title="Music lover"><img alt="App logo" src="@/assets/logo.svg" width="64" height="64"></a> <button type="button" class="v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default primary--text"><span class="v-btn__content">
     Logout
   </span></button></div>
-    <!---->
+    <div role="list" class="v-list track-list v-sheet theme--light rounded v-list--rounded">
+      <div role="listbox" class="v-item-group theme--light v-list-item-group primary--text">
+        <div class="row track-list-setting">
+          <div class="col col-4">
+            <div class="v-input v-input--is-label-active v-input--is-dirty theme--light v-text-field v-select">
+              <div class="v-input__control">
+                <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-12" class="v-input__slot">
+                  <div class="v-select__slot">
+                    <div class="v-select__selections">
+                      <div class="v-select__selection v-select__selection--comma">Search name</div><input id="input-12" readonly="readonly" type="text" aria-readonly="false" autocomplete="off">
+                    </div>
+                    <div class="v-input__append-inner">
+                      <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
+                    </div><input type="hidden" value="text">
+                  </div>
+                  <div class="v-menu">
+                    <!---->
+                  </div>
+                </div>
+                <div class="v-text-field__details">
+                  <div class="v-messages theme--light"><span name="message-transition" tag="div" class="v-messages__wrapper"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-4">
+            <div class="v-input v-input--is-label-active v-input--is-dirty theme--light v-text-field v-select">
+              <div class="v-input__control">
+                <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-17" class="v-input__slot">
+                  <div class="v-select__slot">
+                    <div class="v-select__selections">
+                      <div class="v-select__selection v-select__selection--comma">Custom</div><input id="input-17" readonly="readonly" type="text" aria-readonly="false" autocomplete="off">
+                    </div>
+                    <div class="v-input__append-inner">
+                      <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
+                    </div><input type="hidden" value="custom">
+                  </div>
+                  <div class="v-menu">
+                    <!---->
+                  </div>
+                </div>
+                <div class="v-text-field__details">
+                  <div class="v-messages theme--light"><span name="message-transition" tag="div" class="v-messages__wrapper"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="v-menu track-list-search">
+          <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-inverted v-text-field--solo-flat v-text-field--enclosed">
+            <div class="v-input__control">
+              <div class="v-input__slot">
+                <div class="v-input__prepend-inner">
+                  <div class="v-input__icon v-input__icon--prepend-inner"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">search</i></div>
+                </div>
+                <div class="v-text-field__slot"><label for="input-24" class="v-label theme--light" style="left: 0px; position: absolute;">Search</label><input id="input-24" type="text"></div>
+                <div class="v-input__append-inner">
+                  <div class="v-input__icon v-input__icon--clear"><button disabled="disabled" type="button" aria-label="clear icon" class="v-icon notranslate v-icon--disabled v-icon--link mdi mdi-close theme--light"></button></div>
+                </div>
+              </div>
+              <div class="v-text-field__details">
+                <div class="v-messages theme--light"><span name="message-transition" tag="div" class="v-messages__wrapper"></span></div>
+              </div>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <div><span name="slide-y-transition"><div tabindex="0" transition="slide-y-transition" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light track-list-item"><div class="v-list-item__icon"><div role="progressbar" aria-valuemin="0" aria-valuemax="100" class="v-progress-circular v-progress-circular--indeterminate" style="height: 24px; width: 24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="24 24 48 48" style="transform: rotate(0deg);"><circle fill="transparent" cx="48" cy="48" r="20" stroke-width="8" stroke-dasharray="125.664" stroke-dashoffset="125.66370614359172px" class="v-progress-circular__overlay"></circle></svg><div class="v-progress-circular__info"></div></div></div> <div class="v-list-item__content"><div class="v-list-item__title">Band 0 - Song 0</div></div></div><div tabindex="0" transition="slide-y-transition" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light track-list-item"><div class="v-list-item__icon"><button type="button" class="v-icon notranslate v-icon--link mdi mdi-check-circle theme--light"></button></div> <div class="v-list-item__content"><div class="v-list-item__title">Band 1 - Song 1</div></div></div><div tabindex="0" transition="slide-y-transition" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light track-list-item"><div class="v-list-item__icon"><button type="button" class="v-icon notranslate v-icon--link mdi mdi-cloud-download theme--light"></button></div> <div class="v-list-item__content"><div class="v-list-item__title">Band 2 - Song 2</div></div></div></span></div>
+      </div>
+    </div>
     <footer class="player-wrap__footer">
       <div class="v-card__actions">
         <div class="spacer"></div> <button type="button" class="v-btn v-btn--contained v-btn--fab v-btn--round theme--dark v-size--small primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-plus theme--dark"></i></span></button>
@@ -45,15 +114,15 @@ exports[`Component PlayerWrap snapshots should match snapshot 1`] = `
                 <div class="v-card__text">
                   <div class="v-input theme--light v-text-field v-text-field--placeholder v-file-input">
                     <div class="v-input__prepend-outer">
-                      <div class="v-input__icon v-input__icon--prepend"><i role="button" tabindex="0" class="v-icon notranslate v-icon--link mdi mdi-file-music theme--light"></i></div>
+                      <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-file-music theme--light"></button></div>
                     </div>
                     <div class="v-input__control">
                       <div class="v-input__slot">
-                        <div class="v-text-field__slot"><label for="input-27" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Music file</label>
-                          <div class="v-file-input__text v-file-input__text--placeholder">Select mp3 file</div><input accept="audio/mp3, audio/mpeg" id="input-27" placeholder="Select mp3 file" type="file">
+                        <div class="v-text-field__slot"><label for="input-59" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Music file</label>
+                          <div class="v-file-input__text v-file-input__text--placeholder">Select mp3 file</div><input accept="audio/mp3, audio/mpeg" id="input-59" placeholder="Select mp3 file" type="file">
                         </div>
                         <div class="v-input__append-inner">
-                          <div class="v-input__icon v-input__icon--"><i role="button" tabindex="0" class="v-icon notranslate v-icon--link material-icons theme--light"></i></div>
+                          <div class="v-input__icon v-input__icon--clear"><button disabled="disabled" type="button" aria-label="clear icon" class="v-icon notranslate v-icon--disabled v-icon--link mdi mdi-close theme--light"></button></div>
                         </div>
                       </div>
                       <div class="v-text-field__details">

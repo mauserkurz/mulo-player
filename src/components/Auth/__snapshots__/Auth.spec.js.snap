@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Component Auth snapshots should match snapshot 1`] = `
-<main class="v-content auth" style="padding: 0px 0px 0px 0px;">
-  <div class="v-content__wrap">
+<main class="v-main auth" style="padding: 0px 0px 0px 0px;">
+  <div class="v-main__wrap">
     <div class="container fill-height container--fluid">
       <div class="row align-center justify-center">
         <div class="col-sm-8 col-md-4 col-12">
           <div class="auth-form elevation-12 v-card v-sheet theme--light">
             <form novalidate="novalidate" class="v-form">
-              <header class="v-sheet v-sheet--tile theme--dark v-toolbar v-toolbar--flat primary" style="height: 64px;">
+              <header class="v-sheet theme--dark v-toolbar v-toolbar--flat primary" style="height: 64px;">
                 <div class="v-toolbar__content" style="height: 64px;">
                   <div class="v-toolbar__title">Login form</div>
                   <div class="spacer"></div> <button type="button" class="auth-form__sign-in-tab v-btn v-btn--flat v-btn--text theme--dark v-size--small"><span class="v-btn__content">

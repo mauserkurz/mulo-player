@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Component TrackList snapshots should match snapshot 1`] = `
-<v-list-stub tag="div" tile="true" rounded="true" class="track-list">
+<v-list-stub rounded="true" tag="div" class="track-list">
   <v-list-item-group-stub activeclass="v-item--active" color="primary">
     <tracklistsetting-stub sorttype="custom" filtertype="text"></tracklistsetting-stub>
     <tracklistsearch-stub value="" filtertype="text"></tracklistsearch-stub>

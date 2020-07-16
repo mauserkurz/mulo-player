@@ -198,7 +198,7 @@ describe('Module tracks', () => {
           }));
           await store.dispatch('tracks/getTrackList');
           api.getAllTracksInfo = handler;
-          expect(store.state.tracks.currentTrackID).toBeNull();
+          expect(store.state.tracks.currentTrackID).toBe('');
         });
       });
 

@@ -94,7 +94,7 @@ export default {
         await dispatch('switchTrack', trackList[0].id);
       } else {
         commit('SET_TRACK_LIST', []);
-        commit('SET_CURRENT_TRACK_ID', null);
+        commit('SET_CURRENT_TRACK_ID', '');
       }
     },
 

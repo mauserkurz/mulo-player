@@ -1,5 +1,5 @@
 <template>
-  <v-content class="auth">
+  <v-main class="auth">
     <v-container
       class="fill-height"
       fluid>
@@ -29,7 +29,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-content>
+  </v-main>
 </template>
 
 <script>

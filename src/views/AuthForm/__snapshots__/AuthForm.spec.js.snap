@@ -3,7 +3,7 @@
 exports[`Component AuthForm snapshots should match snapshot for login form 1`] = `
 <div class="auth-form elevation-12 v-card v-sheet theme--light">
   <form novalidate="novalidate" class="v-form">
-    <header class="v-sheet v-sheet--tile theme--dark v-toolbar v-toolbar--flat primary" style="height: 64px;">
+    <header class="v-sheet theme--dark v-toolbar v-toolbar--flat primary" style="height: 64px;">
       <div class="v-toolbar__content" style="height: 64px;">
         <div class="v-toolbar__title">Login form</div>
         <div class="spacer"></div> <button type="button" class="auth-form__sign-in-tab v-btn v-btn--flat v-btn--text theme--dark v-size--small"><span class="v-btn__content">
@@ -64,8 +64,8 @@ exports[`Component AuthForm snapshots should match snapshot for registration for
 - First value
 + Second value
 
-- <div class=\\"auth-form elevation-12 v-card v-sheet theme--light\\"><form novalidate=\\"novalidate\\" class=\\"v-form\\"><header class=\\"v-sheet v-sheet--tile theme--dark v-toolbar v-toolbar--flat primary\\" style=\\"height: 64px;\\"><div class=\\"v-toolbar__content\\" style=\\"height: 64px;\\"><div class=\\"v-toolbar__title\\">Login form</div> <div class=\\"spacer\\"></div> <button type=\\"button\\" class=\\"auth-form__sign-in-tab v-btn v-btn--flat v-btn--text theme--dark v-size--small\\"><span class=\\"v-btn__content\\">
-+ <div class=\\"auth-form elevation-12 v-card v-sheet theme--light\\"><form novalidate=\\"novalidate\\" class=\\"v-form\\"><header class=\\"v-sheet v-sheet--tile theme--dark v-toolbar v-toolbar--flat primary\\" style=\\"height: 64px;\\"><div class=\\"v-toolbar__content\\" style=\\"height: 64px;\\"><div class=\\"v-toolbar__title\\">Registration form</div> <div class=\\"spacer\\"></div> <button type=\\"button\\" class=\\"auth-form__sign-in-tab v-btn v-btn--flat v-btn--text theme--dark v-size--small\\"><span class=\\"v-btn__content\\">
+- <div class=\\"auth-form elevation-12 v-card v-sheet theme--light\\"><form novalidate=\\"novalidate\\" class=\\"v-form\\"><header class=\\"v-sheet theme--dark v-toolbar v-toolbar--flat primary\\" style=\\"height: 64px;\\"><div class=\\"v-toolbar__content\\" style=\\"height: 64px;\\"><div class=\\"v-toolbar__title\\">Login form</div> <div class=\\"spacer\\"></div> <button type=\\"button\\" class=\\"auth-form__sign-in-tab v-btn v-btn--flat v-btn--text theme--dark v-size--small\\"><span class=\\"v-btn__content\\">
++ <div class=\\"auth-form elevation-12 v-card v-sheet theme--light\\"><form novalidate=\\"novalidate\\" class=\\"v-form\\"><header class=\\"v-sheet theme--dark v-toolbar v-toolbar--flat primary\\" style=\\"height: 64px;\\"><div class=\\"v-toolbar__content\\" style=\\"height: 64px;\\"><div class=\\"v-toolbar__title\\">Registration form</div> <div class=\\"spacer\\"></div> <button type=\\"button\\" class=\\"auth-form__sign-in-tab v-btn v-btn--flat v-btn--text theme--dark v-size--small\\"><span class=\\"v-btn__content\\">
           Sign In
         </span></button> <button type=\\"button\\" class=\\"auth-form__sign-up-tab v-btn v-btn--flat v-btn--text theme--dark v-size--small\\"><span class=\\"v-btn__content\\">
           Sign Up
